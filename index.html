@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Art Atlas - 全球艺术图谱</title>
+    <style>
+        :root {
+            --bg: #efe8dc;
+            --paper: rgba(255, 251, 244, 0.94);
+            --paper-strong: #fffdf9;
+            --ink: #211c17;
+            --muted: #675a4d;
+            --accent: #9a6030;
+            --accent-2: #355d7a;
+            --line: rgba(91, 68, 43, 0.18);
+            --shadow: 0 22px 60px rgba(44, 28, 10, 0.12);
+            --map-land: #d8c7b0;
+            --map-stroke: rgba(72, 54, 35, 0.32);
+        }
+
+        body.dark {
+            --bg: #15110d;
+            --paper: rgba(33, 25, 19, 0.94);
+            --paper-strong: #241b15;
+            --ink: #f1e5d2;
+            --muted: #c1aa8f;
+            --accent: #d6a46c;
+            --accent-2: #7ab0d4;
+            --line: rgba(214, 164, 108, 0.18);
+            --shadow: 0 24px 68px rgba(0, 0, 0, 0.34);
+            --map-land: #3a2c1f;
+            --map-stroke: rgba(234, 214, 189, 0.18);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+            line-height: 1.72;
+            background:
+                radial-gradient(circle at top left, rgba(154, 96, 48, 0.14), transparent 28%),
+                radial-gradient(circle at top right, rgba(53, 93, 122, 0.12), transparent 22%),
+                linear-gradient(180deg, #f7f1e8 0%, var(--bg) 36%, #e7dbc9 100%);
+        }
+
+        body.dark {
+            background:
+                radial-gradient(circle at top left, rgba(214, 164, 108, 0.1), transparent 24%),
+                radial-gradient(circle at top right, rgba(122, 176, 212, 0.08), transparent 22%),
+                linear-gradient(180deg, #17120f 0%, var(--bg) 34%, #0f0b09 100%);
+        }
+
+        .shell {
+            width: min(1380px, calc(100% - 32px));
+            margin: 0 auto;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(16px);
+            background: linear-gradient(180deg, rgba(40, 29, 20, 0.92), rgba(68, 48, 31, 0.86));
+            color: #fff5e7;
+            border-bottom: 1px solid rgba(255, 243, 223, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+        }
+
+        .hero {
+            padding: 30px 0 24px;
+        }
+
+        .eyebrow {
+            margin: 0 0 10px;
+            font-size: 0.82rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            opacity: 0.78;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2.15rem, 4vw, 3.6rem);
+            line-height: 1.06;
+        }
+
+        .subtitle {
+            max-width: 980px;
+            margin: 14px 0 0;
+            color: rgba(255, 245, 228, 0.86);
+            font-size: 1.03rem;
+        }
+
+        .controls {
+            position: sticky;
+            top: 132px;
+            z-index: 90;
+            padding: 14px 0 18px;
+            backdrop-filter: blur(14px);
+            background: linear-gradient(180deg, rgba(239, 232, 220, 0.96), rgba(239, 232, 220, 0.74));
+            border-bottom: 1px solid var(--line);
+        }
+
+        body.dark .controls {
+            background: linear-gradient(180deg, rgba(21, 17, 13, 0.92), rgba(21, 17, 13, 0.74));
+        }
+
+        .control-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto auto;
+            gap: 12px;
+            align-items: center;
+        }
+
+        #search {
+            width: 100%;
+            padding: 15px 18px;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            background: var(--paper-strong);
+            color: var(--ink);
+            font: inherit;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        #search:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(154, 96, 48, 0.12);
+        }
+
+        .top-button {
+            border: 1px solid transparent;
+            border-radius: 999px;
+            padding: 10px 14px;
+            font: inherit;
+            cursor: pointer;
+            background: var(--accent);
+            color: #fffdf8;
+        }
+
+        .top-button.secondary {
+            background: transparent;
+            border-color: var(--line);
+            color: var(--accent);
+        }
+
+        .search-hint {
+            color: var(--muted);
+            font-size: 0.92rem;
+            white-space: nowrap;
+        }
+
+        main {
+            padding: 26px 0 70px;
+        }
+
+        .panel,
+        .atlas,
+        .timeline-panel,
+        .entries-panel,
+        .guide-panel {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            border-radius: 26px;
+        }
+
+        .panel,
+        .timeline-panel,
+        .entries-panel,
+        .guide-panel {
+            padding: 22px;
+            margin-bottom: 22px;
+        }
+
+        .panel h2,
+        .atlas h2,
+        .timeline-panel h2,
+        .entries-panel h2,
+        .guide-panel h2 {
+            margin: 0 0 12px;
+            font-size: 1.32rem;
+            color: var(--accent);
+        }
+
+        .panel p,
+        .guide-panel p,
+        .timeline-panel p,
+        .entries-panel p,
+        .atlas p,
+        .region-panel p,
+        .entry p,
+        .summary-card p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .intro-grid,
+        .guide-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .summary-card,
+        .guide-card {
+            padding: 16px;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            background: var(--paper-strong);
+        }
+
+        .summary-card strong,
+        .guide-card strong,
+        .region-panel strong,
+        .entry strong {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+
+        .atlas {
+            display: grid;
+            grid-template-columns: 1.42fr 0.58fr;
+            gap: 18px;
+            padding: 22px;
+            margin-bottom: 22px;
+        }
+
+        .map-stage {
+            position: relative;
+            border-radius: 22px;
+            border: 1px solid var(--line);
+            background:
+                radial-gradient(circle at 20% 20%, rgba(122, 176, 212, 0.18), transparent 22%),
+                linear-gradient(180deg, rgba(255,255,255,0.28), transparent),
+                linear-gradient(180deg, rgba(90, 142, 171, 0.12), rgba(154, 96, 48, 0.05));
+            overflow: hidden;
+        }
+
+        body.dark .map-stage {
+            background:
+                radial-gradient(circle at 20% 20%, rgba(122, 176, 212, 0.12), transparent 22%),
+                linear-gradient(180deg, rgba(255,255,255,0.04), transparent),
+                linear-gradient(180deg, rgba(53, 93, 122, 0.12), rgba(154, 96, 48, 0.06));
+        }
+
+        .map-stage::before,
+        .map-stage::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .map-stage::before {
+            background-image:
+                linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+            background-size: 60px 60px;
+            opacity: 0.35;
+        }
+
+        .map-stage::after {
+            background: radial-gradient(circle at center, transparent 62%, rgba(255,255,255,0.08));
+        }
+
+        .map-image-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 2048 / 1039;
+        }
+
+        .world-image {
+            position: absolute;
+            inset: 0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: saturate(0.86) contrast(1.02);
+        }
+
+        .map-hotspots {
+            position: absolute;
+            inset: 0;
+        }
+
+        .hotspot {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            min-width: 44px;
+            min-height: 44px;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        .hotspot-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin: 0 auto;
+            background: var(--accent);
+            border: 3px solid rgba(255, 255, 255, 0.92);
+            box-shadow: 0 0 0 6px rgba(154, 96, 48, 0.15);
+            transition: 0.2s ease;
+        }
+
+        .hotspot:hover .hotspot-dot,
+        .hotspot.is-active .hotspot-dot {
+            transform: scale(1.14);
+            box-shadow: 0 0 0 9px rgba(154, 96, 48, 0.2);
+        }
+
+        .hotspot-label {
+            margin-top: 6px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255, 253, 248, 0.9);
+            border: 1px solid var(--line);
+            color: var(--ink);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        body.dark .hotspot-label {
+            background: rgba(35, 27, 21, 0.92);
+        }
+
+        .region-panel {
+            display: grid;
+            gap: 12px;
+        }
+
+        .region-card,
+        .legend-card {
+            padding: 16px;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            background: var(--paper-strong);
+        }
+
+        .region-title {
+            margin: 0 0 8px;
+            font-size: 1.08rem;
+            color: var(--ink);
+        }
+
+        .source-link,
+        .reference-links a {
+            color: var(--accent-2);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(53, 93, 122, 0.25);
+            transition: color 0.18s ease, border-color 0.18s ease;
+        }
+
+        .source-link:hover,
+        .reference-links a:hover {
+            color: var(--accent);
+            border-bottom-color: rgba(154, 96, 48, 0.45);
+        }
+
+        .chips,
+        .filter-chips,
+        .timeline-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .chip,
+        .legend-chip,
+        .meta-chip {
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(154, 96, 48, 0.12);
+            color: var(--accent);
+            font-size: 0.82rem;
+            border: 1px solid transparent;
+        }
+
+        .timeline-panel {
+            scroll-margin-top: 220px;
+        }
+
+        .timeline-bar {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .timeline-node {
+            position: relative;
+            padding: 16px 14px 14px;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            background: var(--paper-strong);
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .timeline-node::before {
+            content: "";
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 6px rgba(154, 96, 48, 0.12);
+        }
+
+        .timeline-node.is-active,
+        .timeline-node:hover {
+            border-color: rgba(154, 96, 48, 0.48);
+            transform: translateY(-1px);
+        }
+
+        .timeline-node strong {
+            display: block;
+            padding-left: 22px;
+            margin-bottom: 6px;
+            color: var(--ink);
+        }
+
+        .timeline-node span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .type-panel {
+            margin-top: 16px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .type-filter,
+        .faith-filter,
+        .status-box {
+            padding: 16px;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            background: var(--paper-strong);
+        }
+
+        .type-filter strong,
+        .faith-filter strong,
+        .status-box strong {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .filter-chip {
+            border: 1px solid var(--line);
+            background: transparent;
+            color: var(--muted);
+            border-radius: 999px;
+            padding: 8px 12px;
+            font: inherit;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .filter-chip.is-active,
+        .filter-chip:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fffdf8;
+        }
+
+        .entries-panel {
+            scroll-margin-top: 220px;
+        }
+
+        .entries-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .entry-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .entry {
+            border-radius: 22px;
+            border: 1px solid var(--line);
+            background: var(--paper-strong);
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .entry::before {
+            content: "";
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 5px;
+            background: linear-gradient(180deg, var(--accent), transparent);
+        }
+
+        .entry-head {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .entry h3 {
+            margin: 0;
+            font-size: 1.24rem;
+            color: var(--ink);
+        }
+
+        .entry-meta {
+            color: var(--muted);
+            font-size: 0.92rem;
+            text-align: right;
+        }
+
+        .entry-body {
+            display: grid;
+            gap: 12px;
+        }
+
+        .reference-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .entry-section {
+            padding: 14px;
+            border-radius: 16px;
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, rgba(255,255,255,0.5), transparent);
+        }
+
+        body.dark .entry-section {
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+        }
+
+        .entry-section p {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .entry .prompt-box {
+            padding: 14px;
+            border-radius: 16px;
+            background: #f7efdf;
+            border: 1px solid rgba(154, 96, 48, 0.2);
+        }
+
+        body.dark .entry .prompt-box {
+            background: #2a2018;
+            border-color: rgba(214, 164, 108, 0.18);
+        }
+
+        .prompt-box code {
+            display: block;
+            white-space: pre-wrap;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            color: var(--ink);
+            font-size: 0.9rem;
+        }
+
+        .entry-actions {
+            margin-top: 12px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .copy-button {
+            border: 1px solid transparent;
+            border-radius: 999px;
+            padding: 9px 13px;
+            font: inherit;
+            cursor: pointer;
+            background: var(--accent);
+            color: #fffdf8;
+        }
+
+        .empty-state {
+            padding: 24px;
+            border-radius: 20px;
+            border: 1px dashed var(--line);
+            text-align: center;
+            color: var(--muted);
+        }
+
+        footer {
+            padding: 14px 0 36px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+        .toggle-dark {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 56px;
+            height: 56px;
+            border: none;
+            border-radius: 50%;
+            background: var(--accent);
+            color: white;
+            font-size: 1.35rem;
+            cursor: pointer;
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.22);
+        }
+
+        @media (max-width: 1160px) {
+            .atlas,
+            .taxonomy-grid,
+            .intro-grid,
+            .guide-grid,
+            .entry-grid,
+            .timeline-bar,
+            .control-row {
+                grid-template-columns: 1fr;
+            }
+
+            .search-hint {
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .shell {
+                width: min(100% - 20px, 1380px);
+            }
+
+            .controls {
+                top: 124px;
+            }
+
+            .atlas,
+            .panel,
+            .timeline-panel,
+            .entries-panel,
+            .guide-panel,
+            .entry,
+            .map-stage {
+                border-radius: 18px;
+            }
+
+            .entry-head {
+                flex-direction: column;
+            }
+
+            .entry-meta {
+                text-align: left;
+            }
+
+            .map-stage {
+                border-radius: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="shell hero">
+            <p class="eyebrow">Global Art Atlas</p>
+            <h1>Global Art Atlas</h1>
+            <p class="subtitle">这一版是新开的全球艺术图谱，不替代原来的 `art6.0.html`。它用 `世界地图 + 时间轴 + 艺术类型 + 宗教视觉系统` 来组织文明与风格，方便把阿兹特克、玛雅、安第斯、非洲、太平洋岛国、佛教石窟、东正教圣像、天主教巴洛克、新教北方视觉与犹太礼仪图像一起纳入比较。</p>
+        </div>
+    </header>
+
+    <div class="controls">
+        <div class="shell control-row">
+            <input id="search" type="text" placeholder="搜索文明、地区、媒介或识别词，例如：阿兹特克、太平洋岛国、青铜、木雕、印象派、版画" autocomplete="off">
+            <button class="top-button secondary" type="button" id="reset-filters">重置筛选</button>
+            <div class="search-hint" id="result-count">显示 35 个文明样本</div>
+        </div>
+    </div>
+
+    <main class="shell">
+        <section class="panel">
+            <h2>这一版怎么读</h2>
+            <p>这不是把所有艺术史塞进一张地图里，而是先建立一个适合检索和生图的世界坐标系。你可以先从地图选区域，再从时间轴选时期，再用艺术类型进一步切开媒介差异。这样同样是“古代艺术”，你能区分埃及纪念性、商周礼器、玛雅建筑浮雕、太平洋木雕与纹身系统，而不是把它们混成一种抽象的“异域感”。</p>
+            <div class="intro-grid">
+                <div class="summary-card">
+                    <strong>地图负责空间</strong>
+                    <p>把文明放回地理环境里看，能更快意识到气候、材料、贸易路线和宗教传播如何塑造视觉。</p>
+                </div>
+                <div class="summary-card">
+                    <strong>时间轴负责顺序</strong>
+                    <p>把史前、古代文明、古典时代、中古、早期近代、现代分开，避免跨世纪错配。</p>
+                </div>
+                <div class="summary-card">
+                    <strong>类型负责媒介</strong>
+                    <p>建筑、造像、陶瓷、金工、纺织、版画、木雕、动漫插画等都要分开看，时代特征才会清楚。</p>
+                </div>
+                <div class="summary-card">
+                    <strong>卡片负责生图</strong>
+                    <p>每张卡片都给出识别锚点、材料线索、避坑项和 Prompt 骨架，方便直接转写为生成提示词。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="atlas">
+            <div>
+                <h2>世界地图热点</h2>
+                <p>点击热点可按区域筛选。底图现在换成了真实世界地图的 Robinson projection 版本，重点仍然是文明分布与观看路线，而不是王朝疆界级测绘。</p>
+                <div class="map-stage">
+                    <div class="map-image-wrap">
+                        <img class="world-image" src="world_map_robinson.svg" alt="真实世界地图底图，Robinson projection" />
+                        <div class="map-hotspots" id="map-hotspots"></div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="region-panel">
+                <div class="region-card">
+                    <strong>当前区域</strong>
+                    <h3 class="region-title" id="region-title">全部区域</h3>
+                    <p id="region-description">从地图上选择一个区域后，这里会显示该区域的地理特征、常见媒介与代表文明。你也可以不选区域，直接从时间轴或类型切入。</p>
+                    <div class="chips" id="region-highlights"></div>
+                </div>
+                <div class="legend-card">
+                    <strong>地图提醒</strong>
+                    <p>这张图适合做文明级导航，不适合细到城邦或王朝疆界。真正区分时代时，还是要回到卡片里看材料、工艺、结构和图像语法。</p>
+                </div>
+                <div class="legend-card">
+                    <strong>本版覆盖</strong>
+                    <div class="chips">
+                        <span class="legend-chip">欧洲</span>
+                        <span class="legend-chip">北非与西亚</span>
+                        <span class="legend-chip">南亚</span>
+                        <span class="legend-chip">东亚</span>
+                        <span class="legend-chip">东南亚</span>
+                        <span class="legend-chip">非洲</span>
+                        <span class="legend-chip">中美洲</span>
+                        <span class="legend-chip">安第斯</span>
+                        <span class="legend-chip">太平洋岛国</span>
+                        <span class="legend-chip">澳洲</span>
+                    </div>
+                </div>
+                <div class="legend-card">
+                    <strong>地图来源</strong>
+                    <p>当前底图来自 Wikimedia Commons 的空白世界地图 Robinson projection 版本，适合做离线热点叠加。<a class="source-link" href="https://commons.wikimedia.org/wiki/File:Blank_world_map_Robinson_projection.svg" target="_blank" rel="noopener noreferrer">查看来源与许可</a></p>
+                </div>
+            </aside>
+        </section>
+
+        <section class="timeline-panel" id="timeline-panel">
+            <h2>时间轴、艺术类型与宗教视觉系统</h2>
+            <p>先锁定时期，再按艺术类型和宗教视觉系统横向比较，会比直接搜“古风”或“异域”更可靠。</p>
+            <div class="timeline-bar" id="timeline-bar"></div>
+            <div class="type-panel">
+                <div class="type-filter">
+                    <strong>艺术类型</strong>
+                    <div class="filter-chips" id="type-filters"></div>
+                </div>
+                <div class="faith-filter">
+                    <strong>宗教视觉系统</strong>
+                    <div class="filter-chips" id="faith-filters"></div>
+                </div>
+                <div class="status-box" id="status-box">
+                    <strong>当前筛选</strong>
+                    <p>全部区域 / 全部时期 / 全部艺术类型 / 全部宗教视觉系统。你也可以用顶部搜索框叠加关键词。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="entries-panel" id="entries-panel">
+            <div class="entries-head">
+                <div>
+                    <h2>文明卡片</h2>
+                    <p>这些卡片不是完整世界艺术史，而是为了帮助你更快建立全球艺术的时代坐标和生图语言。</p>
+                </div>
+                <div class="chips" id="active-meta"></div>
+            </div>
+            <div class="entry-grid" id="entry-grid"></div>
+        </section>
+
+        <section class="guide-panel">
+            <h2>如何用这版服务 AI 生图</h2>
+            <div class="guide-grid">
+                <div class="guide-card">
+                    <strong>先定地区，再定时期</strong>
+                    <p>例如想做中美洲文明，就先从地图选中美洲，再用时间轴缩到古典或早期近代，模型会少很多跨洲串味。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>再定媒介</strong>
+                    <p>同一个文明里，建筑、壁画、青铜、纺织和木雕往往是不同的视觉语言，不要混成一种“民族风”。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>把材料写进提示词</strong>
+                    <p>石灰岩、火山石、陶胎、玉石、金饰、羽毛、木雕、树皮布，这些比抽象形容词更能钉住画面。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>把排除项写出来</strong>
+                    <p>例如阿兹特克避免印加石砌感，波利尼西亚木雕避免东亚寺庙装饰感，印象派避免野兽派纯色块。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>代表作品链接是入口</strong>
+                    <p>文明卡里的链接以“快速跳过去看清楚大概长什么样”为目标，不保证都是唯一代表作，但足够帮助你建立图像直觉。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>宗教先看媒介语法</strong>
+                    <p>佛教先看造像比例与石窟叙事，正统基督教先看圣像与圣像屏，天主教先看祭坛与戏剧光，新教先看讲坛、版画与简净内堂，犹太教先看希伯来文、经卷与礼仪器物。</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <button class="toggle-dark" onclick="toggleDark()" title="切换深色模式">🌙</button>
+
+    <script>
+        const regions = {
+            all: {
+                label: '全部区域',
+                description: '显示当前地图里所有已接入文明样本。世界艺术不是一条单线进化史，而是多个区域在不同材料和宗教系统里的并行发展。',
+                highlights: ['地图总览', '跨文明比较', '适合先定范围']
+            },
+            europe: {
+                label: '欧洲',
+                x: 44,
+                y: 24,
+                description: '从洞穴壁画、希腊雕塑、哥特建筑到文艺复兴、印象派和现代设计，欧洲的强项在于绘画、建筑、雕塑与现代设计系统的连续展开。',
+                highlights: ['洞穴艺术', '古典雕塑', '哥特教堂', '文艺复兴', '现代绘画']
+            },
+            north_africa_west_asia: {
+                label: '北非与西亚',
+                x: 49,
+                y: 33,
+                description: '这里集中了纪念性建筑、王权浮雕、宗教图像和城市文明早期的结构秩序，古埃及和两河流域都属于这一块观看核心。',
+                highlights: ['纪念建筑', '王权浮雕', '宗教图像', '古代城市']
+            },
+            south_asia: {
+                label: '南亚',
+                x: 61,
+                y: 42,
+                description: '南亚的关键在于雕塑、佛教造像、湿润身体感和细密装饰系统，既有早期城市文明，也有宗教图像的成熟谱系。',
+                highlights: ['佛教壁画', '造像', '细密画', '早期城市文明']
+            },
+            east_asia: {
+                label: '东亚',
+                x: 78,
+                y: 31,
+                description: '东亚的时代识别高度依赖器物、书写、绘画、造像和版画系统。中国、日本、朝鲜在媒介上有强连续性，但气质差异也很大。',
+                highlights: ['青铜', '山水画', '宫廷绘画', '版画', '动画漫画']
+            },
+            southeast_asia: {
+                label: '东南亚',
+                x: 74,
+                y: 48,
+                description: '东南亚常通过热带气候中的寺庙建筑、石雕和佛教视觉系统形成自己的修长、神秘和湿热感。',
+                highlights: ['吴哥', '热带寺庙', '石雕佛像', '修长体量']
+            },
+            africa: {
+                label: '非洲',
+                x: 46,
+                y: 56,
+                description: '撒哈拉以南非洲的时代差异常保存在金工、木雕、面具、王权物件和宗教系统里，不能被简化成一种“部落感”。',
+                highlights: ['金工', '面具', '王权器物', '木雕']
+            },
+            mesoamerica: {
+                label: '中美洲',
+                x: 21,
+                y: 40,
+                description: '玛雅和阿兹特克等中美洲文明在建筑、浮雕、羽饰、仪式图像和历法象征上都拥有极强辨识度。',
+                highlights: ['金字塔', '浮雕', '羽饰', '仪式视觉']
+            },
+            andes: {
+                label: '安第斯',
+                x: 28,
+                y: 69,
+                description: '安第斯文明的标志常来自石砌建筑、山地秩序、纺织纹样和金工系统，视觉气质与中美洲不同。',
+                highlights: ['山地石砌', '纺织几何', '金工', '高地文明']
+            },
+            pacific_islands: {
+                label: '太平洋岛国',
+                x: 90,
+                y: 56,
+                description: '太平洋岛国的视觉系统不仅是木雕，还包括树皮布、航海文化、纹身、祖灵系统和身体作为媒介的装饰逻辑。',
+                highlights: ['木雕', '树皮布', '纹身', '航海文化']
+            },
+            oceania: {
+                label: '澳洲',
+                x: 82,
+                y: 77,
+                description: '澳洲原住民艺术常把土地、梦时、祖灵和地貌线索编码进岩画、点绘和身体图式中，时间感与西方线性历史不同。',
+                highlights: ['岩画', '点绘', '梦时', '祖灵地景']
+            }
+        };
+
+        const eras = [
+            { id: 'all', label: '全部时期', years: '不限', summary: '先看全貌，再缩窄到具体时期。' },
+            { id: 'prehistoric', label: '史前', years: '前 40000 - 前 3000', summary: '岩画、器物和早期 ritual 语言。' },
+            { id: 'ancient', label: '古代文明', years: '前 3000 - 前 500', summary: '城市、礼制、纪念建筑和早期王权图像。' },
+            { id: 'classical', label: '古典时代', years: '前 500 - 500', summary: '古典比例、帝国秩序和宗教传播系统。' },
+            { id: 'medieval', label: '中古 / 中世纪', years: '500 - 1400', summary: '宗教建筑、造像、文人体系和区域王朝风格。' },
+            { id: 'earlymodern', label: '早期近代', years: '1400 - 1800', summary: '帝国全球化、版画传播、海上世界和宫廷风格。' },
+            { id: 'modern', label: '现代 / 当代', years: '1800 - 至今', summary: '工业、都市、动画、现代设计与全球媒介。' }
+        ];
+
+        const types = ['全部艺术类型', '绘画壁画', '建筑空间', '雕塑造像', '陶瓷器物', '金工青铜', '版画书籍', '纺织服饰', '木雕身体艺术', '动漫插画', '现代设计'];
+        const faiths = ['全部宗教视觉系统', '佛教', '东正教 / 正统基督教', '天主教 / 拉丁基督教', '新教', '犹太教'];
+
+        const entries = [
+            {
+                id: 'lascaux',
+                name: '拉斯科洞穴艺术 Lascaux Cave Art',
+                region: 'europe',
+                era: 'prehistoric',
+                years: '约前 17000 年',
+                start: -17000,
+                types: ['绘画壁画'],
+                media: '岩壁绘画',
+                anchors: '岩壁起伏、赭石炭黑、野牛马鹿、火把光、仪式性',
+                materials: '石灰岩洞壁、矿物颜料、木炭',
+                distinction: '不要做成平滑民族装饰画，要保留粗粝洞穴表面和动物冲刺感。',
+                prompt: 'lascaux cave art, prehistoric animals in motion on uneven limestone wall, ochre and charcoal pigments, torchlit cave atmosphere, ritual primal energy, rough mineral texture, no polished modern finish'
+            },
+            {
+                id: 'aboriginal-rock',
+                name: '澳洲原住民岩画与梦时图式 Aboriginal Rock Art',
+                region: 'oceania',
+                era: 'prehistoric',
+                years: '史前延续至今',
+                start: -20000,
+                types: ['绘画壁画', '木雕身体艺术'],
+                media: '岩画 / 身体图式',
+                anchors: 'X-ray 样式、祖灵路径、点与线的土地编码、赭白黑',
+                materials: '岩壁、矿物颜料、身体涂绘',
+                distinction: '不要把它做成随机点彩抽象画，关键是土地、动物内视图和梦时叙事系统。',
+                prompt: 'aboriginal australian rock art, x-ray animal forms, ochre white and black pigments, ancestral dreamtime pathways, symbolic land mapping, sacred rock shelter surface, no western abstract modernist framing'
+            },
+            {
+                id: 'egypt',
+                name: '古埃及纪念性艺术 Ancient Egypt',
+                region: 'north_africa_west_asia',
+                era: 'ancient',
+                years: '前 3000 - 前 30',
+                start: -3000,
+                types: ['建筑空间', '雕塑造像', '绘画壁画'],
+                media: '神庙 / 壁画 / 浮雕',
+                anchors: '侧头正眼、正肩侧腿、象形文字、纪念尺度、神权秩序',
+                materials: '石灰岩、砂岩、矿物平涂颜料',
+                distinction: '不要加希腊式自然体积，埃及的关键是法则化和永恒秩序。',
+                prompt: 'ancient egyptian monumental art, temple wall painting and relief, composite profile with frontal eye, hieroglyphs, monumental order, ochre lapis and malachite palette, sacred funerary geometry, no renaissance perspective'
+            },
+            {
+                id: 'mesopotamia',
+                name: '两河王权浮雕 Mesopotamian Royal Relief',
+                region: 'north_africa_west_asia',
+                era: 'ancient',
+                years: '前 2500 - 前 539',
+                start: -2500,
+                types: ['雕塑造像', '建筑空间'],
+                media: '宫殿浮雕 / 城门',
+                anchors: '楔形文字、翼兽、卷须胡须、征战狩猎、硬质雕刻',
+                materials: '石灰岩浮雕、釉砖、深蓝土黄对比',
+                distinction: '不要做成古埃及静态壁画，两河更带军事张力和帝国压迫感。',
+                prompt: 'mesopotamian royal relief, assyrian palace carving, cuneiform inscriptions, lamassu guardian, lion hunt scene, hard chiseled stone, imperial force, deep blue glazed brick accents'
+            },
+            {
+                id: 'indus',
+                name: '印度河谷印章与陶塑 Indus Valley Art',
+                region: 'south_asia',
+                era: 'ancient',
+                years: '前 2600 - 前 1900',
+                start: -2600,
+                types: ['陶瓷器物', '金工青铜'],
+                media: '印章 / 陶塑 / 早期城市器物',
+                anchors: '小型方印、几何布局、动物徽记、母神陶塑、早期城市秩序',
+                materials: '烧陶、石印、青铜小器',
+                distinction: '不要做成后世印度宗教图像，它更像早期符号系统和城市文明的精密工艺。',
+                prompt: 'indus valley seal art and terracotta figures, compact geometric layout, carved animal emblems, early script signs, clay red and stone gray palette, precise bronze age craftsmanship'
+            },
+            {
+                id: 'shang-zhou',
+                name: '商周礼器与青铜 Shang-Zhou Bronze',
+                region: 'east_asia',
+                era: 'ancient',
+                years: '前 1600 - 前 256',
+                start: -1600,
+                types: ['金工青铜'],
+                media: '礼器 / 青铜铸造',
+                anchors: '饕餮、雷纹、厚重器形、范铸痕迹、礼制威压',
+                materials: '深青铜、黑绿包浆、铸造凸棱',
+                distinction: '不要写成轻快彩陶或明清器物，商周关键是神秘、压迫、祖先祭祀。',
+                prompt: 'shang zhou ritual bronze vessel, taotie mask, dense leiwen thunder pattern, heavy archaic silhouette, dark bronze patina with green oxidation, ancestral ritual power'
+            },
+            {
+                id: 'maya',
+                name: '玛雅建筑与浮雕 Maya Monumental Art',
+                region: 'mesoamerica',
+                era: 'classical',
+                years: '250 - 900',
+                start: 250,
+                types: ['建筑空间', '雕塑造像', '绘画壁画'],
+                media: '金字塔 / 石碑 / 壁画',
+                anchors: '台阶金字塔、历法符号、羽蛇神系图像、浮雕石碑、丛林石城',
+                materials: '石灰岩、灰泥彩绘、热带风化表面',
+                distinction: '不要做成阿兹特克帝国晚期的军事压迫感，玛雅更古典、更天文历法化。',
+                prompt: 'classical maya monumental art, stepped pyramid and carved stelae, hieroglyphic calendar glyphs, tropical limestone city in jungle humidity, ritual relief carving, faded mural traces, no late aztec militarized density'
+            },
+            {
+                id: 'gandhara',
+                name: '犍陀罗佛像 Gandhara',
+                region: 'south_asia',
+                era: 'classical',
+                years: '1 - 5 世纪',
+                start: 1,
+                types: ['雕塑造像'],
+                faiths: ['佛教'],
+                media: '佛教造像',
+                anchors: '希腊式深褶、波浪卷发、灰片岩、直鼻梁、冷静佛身',
+                materials: '片岩或灰石、深刻衣褶',
+                distinction: '不要做成秣菟罗式圆厚佛身，犍陀罗更冷灰、更古典。',
+                prompt: 'gandhara buddha statue, greco-buddhist realism, deep roman-style drapery folds, wavy hair, gray schist stone, calm classical body, no warm rounded mathura softness'
+            },
+            {
+                id: 'gupta-ajanta',
+                name: '笈多与阿旃陀 Gupta / Ajanta',
+                region: 'south_asia',
+                era: 'classical',
+                years: '4 - 6 世纪',
+                start: 320,
+                types: ['绘画壁画', '雕塑造像'],
+                faiths: ['佛教'],
+                media: '佛教壁画 / 雕像',
+                anchors: '半闭眼、湿润肉身、轻薄衣纹、莲花珠饰、精神光感',
+                materials: '矿物颜料、洞窟壁面、平滑石雕',
+                distinction: '不要加犍陀罗的重褶或唐代的厚体量，笈多关键是理想化与柔润。',
+                prompt: 'gupta ajanta buddhist art, half-closed eyes, moist classical body modeling, delicate transparent robe folds, lotus ornaments, rich earth pigments, spiritual serenity in cave setting'
+            },
+            {
+                id: 'classical-greek',
+                name: '古希腊古典艺术 Classical Greek',
+                region: 'europe',
+                era: 'classical',
+                years: '前 5 - 前 4 世纪',
+                start: -500,
+                types: ['雕塑造像', '建筑空间'],
+                media: '神庙 / 雕塑',
+                anchors: 'contrapposto、理想人体、柱式秩序、克制面部、结构明朗',
+                materials: '大理石、青铜、柱式建筑',
+                distinction: '不要滑向巴洛克戏剧感或罗马写实皱纹，古希腊更理性、更均衡。',
+                prompt: 'classical greek sculpture and temple architecture, idealized anatomy with balanced contrapposto, marble surface, doric ionic order, rational harmony, no baroque theatrical excess'
+            },
+            {
+                id: 'andes-textile',
+                name: '安第斯纺织与山地文明 Andean Textile Logic',
+                region: 'andes',
+                era: 'classical',
+                years: '前 500 - 1200',
+                start: -500,
+                types: ['纺织服饰', '金工青铜'],
+                media: '纺织 / 仪式器物',
+                anchors: '几何纹样、高地色带、秩序化重复、纺织即文明编码',
+                materials: '羊驼毛、植物染、金属饰件',
+                distinction: '不要做成中美洲石雕或欧亚织锦，安第斯更强调几何重复与高地色秩序。',
+                prompt: 'andean textile art, geometric woven bands, alpaca fiber texture, highland color order in reds ochres blacks and creams, ritual garment logic, no mesoamerican stone relief emphasis'
+            },
+            {
+                id: 'byzantine',
+                name: '拜占庭镶嵌画 Byzantine Mosaics',
+                region: 'europe',
+                era: 'medieval',
+                years: '500 - 1453',
+                start: 500,
+                types: ['绘画壁画', '建筑空间'],
+                faiths: ['东正教 / 正统基督教'],
+                media: '教堂镶嵌画 / 穹顶',
+                anchors: '金底圣像、正面神性、穹顶空间、面部抽象神圣、光像神迹',
+                materials: '玻璃镶嵌片、金箔底、石材教堂',
+                distinction: '不要做成文艺复兴透视空间，拜占庭关键是神圣平面和发光金底。',
+                prompt: 'byzantine mosaic interior, gold ground icon-like figures, frontal sacred presence, shimmering tesserae, domed church architecture, spiritual light, no renaissance naturalistic perspective'
+            },
+            {
+                id: 'gothic',
+                name: '哥特教堂 Gothic Cathedral',
+                region: 'europe',
+                era: 'medieval',
+                years: '12 - 15 世纪',
+                start: 1140,
+                types: ['建筑空间', '雕塑造像'],
+                faiths: ['天主教 / 拉丁基督教'],
+                media: '教堂建筑 / 彩窗 / 门廊雕塑',
+                anchors: '尖拱、飞扶壁、垂直上升、彩窗神光、石雕门廊',
+                materials: '石材、彩绘玻璃、肋拱结构',
+                distinction: '不要做成罗马式的厚重低矮，哥特的关键词是向上、透光和精神紧张。',
+                prompt: 'gothic cathedral interior and facade, pointed arches, flying buttresses, soaring verticality, stained glass light, sculpted portals, spiritual ascent, no heavy squat romanesque mass'
+            },
+            {
+                id: 'tang',
+                name: '盛唐绘画与器物 Tang Cosmopolitan Art',
+                region: 'east_asia',
+                era: 'medieval',
+                years: '7 - 8 世纪',
+                start: 618,
+                types: ['绘画壁画', '陶瓷器物', '雕塑造像'],
+                media: '人物画 / 壁画 / 三彩 / 造像',
+                anchors: '丰厚体量、高饱和矿物色、异域交流、胡风元素、盛世自信',
+                materials: '绢本、壁面、矿物重彩、陶器与彩塑',
+                distinction: '不要写成宋代的清淡留白，唐代需要外放和饱满。',
+                prompt: 'high tang art, full-bodied figures, saturated mineral pigments, cosmopolitan changan energy, flowing weighted drapery, sancai ceramic accents, confident imperial atmosphere'
+            },
+            {
+                id: 'song',
+                name: '宋代山水与官窑 Song Aesthetic',
+                region: 'east_asia',
+                era: 'medieval',
+                years: '10 - 13 世纪',
+                start: 960,
+                types: ['绘画壁画', '陶瓷器物'],
+                media: '文人山水 / 官窑青瓷',
+                anchors: '留白、淡墨层次、清疏理性、内敛器形、釉色克制',
+                materials: '纸绢、水墨、细腻瓷胎、淡青釉层',
+                distinction: '不要做成唐代重彩或明清繁饰，宋代强在克制和呼吸感。',
+                prompt: 'song dynasty aesthetic, literati landscape with broad misty negative space, restrained ink layers, elegant celadon vessel silhouette, quiet rational refinement, no tang exuberant saturation'
+            },
+            {
+                id: 'heian',
+                name: '平安宫廷绘画 Heian Court',
+                region: 'east_asia',
+                era: 'medieval',
+                years: '794 - 1185',
+                start: 794,
+                types: ['绘画壁画'],
+                media: '宫廷绘卷',
+                anchors: '层叠衣装、长发、吹拔屋台、引目钩鼻、物哀',
+                materials: '纸本卷轴、柔和设色',
+                distinction: '不要做成浮世绘的都市平面感，平安更静、更贵族、更情绪内向。',
+                prompt: 'heian period court painting, layered junihitoe robes, hikime kagibana faces, blown-off roof interior, mono no aware atmosphere, muted elegant colors, handscroll narrative'
+            },
+            {
+                id: 'angkor',
+                name: '吴哥建筑与高棉雕刻 Angkor Khmer Art',
+                region: 'southeast_asia',
+                era: 'medieval',
+                years: '9 - 15 世纪',
+                start: 802,
+                types: ['建筑空间', '雕塑造像'],
+                media: '寺庙建筑 / 石雕',
+                anchors: '塔庙布局、热带石材、微笑面像、长廊浮雕、水系空间',
+                materials: '砂岩、 laterite、热带植被侵蚀表面',
+                distinction: '不要做成北方石窟佛像或印度寺庙高繁装饰，吴哥更平静、更热带、更纪念性。',
+                prompt: 'angkor khmer temple art, monumental sandstone towers, bas-reliefs along galleries, serene smiling faces, tropical humidity and water reservoirs, sacred stone weathering, no north asian cave carving language'
+            },
+            {
+                id: 'goryeo',
+                name: '高丽青瓷 Goryeo Celadon',
+                region: 'east_asia',
+                era: 'medieval',
+                years: '918 - 1392',
+                start: 918,
+                types: ['陶瓷器物'],
+                media: '青瓷器物',
+                anchors: '玉青釉色、sanggam 象嵌、修长器型、温润低调',
+                materials: '青瓷釉层、细腻胎体、镶嵌装饰',
+                distinction: '不要写成明清五彩或龙泉厚绿，高丽青瓷更轻、更雅、更空气化。',
+                prompt: 'goryeo celadon vessel, jade-green glaze, delicate sanggam inlay, slender silhouette, soft luminous ceramic surface, restrained court elegance, no flashy multicolor decoration'
+            },
+            {
+                id: 'ethiopia',
+                name: '埃塞俄比亚基督教艺术 Ethiopian Christian Art',
+                region: 'africa',
+                era: 'medieval',
+                years: '12 - 17 世纪',
+                start: 1100,
+                types: ['建筑空间', '绘画壁画'],
+                faiths: ['东正教 / 正统基督教'],
+                media: '岩石教堂 / 手抄本绘画',
+                anchors: '岩凿教堂、正面圣像、强烈轮廓、红黄绿蓝对比、圣书图像',
+                materials: '岩石建筑、木板或羊皮纸、矿物颜料',
+                distinction: '不要做成拜占庭镶嵌或欧洲哥特彩窗，埃塞体系更平面、更强轮廓、更高原化。',
+                prompt: 'ethiopian christian art, rock-hewn church atmosphere, frontal saintly figures, bold contour lines, strong reds greens yellows and blues, illuminated manuscript aesthetic, highland sacred stillness'
+            },
+            {
+                id: 'east-asian-buddhist-caves',
+                name: '东亚佛教石窟 East Asian Buddhist Cave Art',
+                region: 'east_asia',
+                era: 'medieval',
+                years: '5 - 10 世纪',
+                start: 460,
+                types: ['雕塑造像', '绘画壁画', '建筑空间'],
+                faiths: ['佛教'],
+                media: '石窟 / 壁画 / 造像',
+                anchors: '北魏云冈的厚重、龙门的中原化修长、敦煌的满壁叙事、供养人、飞天、龛内中心佛',
+                materials: '砂岩或石灰岩崖壁、彩塑、矿物壁画、洞窟建筑',
+                distinction: '不要一概做成唐代金碧寺庙或藏传唐卡；石窟体系关键是崖壁空间、中心像与满壁叙事的结合。',
+                prompt: 'east asian buddhist cave art, yungang longmen mogao synthesis, rock-cut shrine with central buddha, surrounding bodhisattvas, mural narratives and donor figures, mineral pigments on cave wall, flying apsaras, carved cliff sanctuary, no tibetan thangka layout or glossy modern temple finish'
+            },
+            {
+                id: 'orthodox-icons',
+                name: '东正教圣像与圣像屏 Orthodox Icons',
+                region: 'europe',
+                era: 'medieval',
+                years: '9 - 17 世纪',
+                start: 843,
+                types: ['绘画壁画', '建筑空间'],
+                faiths: ['东正教 / 正统基督教'],
+                media: '木板圣像 / 圣像屏',
+                anchors: '正面圣者、金底、细长鼻梁、木板蛋彩、庄严静止、圣像屏分层',
+                materials: '木板、石膏地、蛋彩、金箔、教堂圣像屏',
+                distinction: '不要做成天主教巴洛克祭坛或文艺复兴透视场景；东正教图像强调礼拜中的临在感与图像规范。',
+                prompt: 'orthodox christian icon, egg tempera and gold on wood panel, frontal saint or virgin theotokos, hieratic stillness, elongated features, luminous gold ground, iconostasis setting with tiered icons, no baroque illusionism or freestanding sculptural altar'
+            },
+            {
+                id: 'maori',
+                name: '毛利木雕与 Moko Māori Carving',
+                region: 'pacific_islands',
+                era: 'medieval',
+                years: '约 1300 年后',
+                start: 1300,
+                types: ['木雕身体艺术', '纺织服饰'],
+                media: '木雕 / 纹身 / 仪式器物',
+                anchors: '螺旋纹、祖灵面相、眼部镶嵌、Moko 纹身路径、舟与会堂装饰',
+                materials: '木材、骨、贝、皮肤纹身',
+                distinction: '不要做成一般泛太平洋图腾雕刻，毛利有非常强的面部涡旋和谱系记忆系统。',
+                prompt: 'maori carving and moko aesthetic, spiral facial motifs, ancestral wood carving, shell inlay eyes, ceremonial meeting house details, tattoo paths encoding genealogy, no generic tiki tourist simplification'
+            },
+            {
+                id: 'renaissance',
+                name: '文艺复兴意大利 Renaissance Italy',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '15 - 16 世纪',
+                start: 1400,
+                types: ['绘画壁画', '建筑空间', '雕塑造像'],
+                faiths: ['天主教 / 拉丁基督教'],
+                media: '油画 / 湿壁画 / 建筑',
+                anchors: '线性透视、古典人体、三角构图、均衡空间、人文主义',
+                materials: '油画、湿壁画、大理石、古典建筑秩序',
+                distinction: '不要做成巴洛克强戏剧光影，文艺复兴更均衡、更明朗。',
+                prompt: 'high renaissance italian art, balanced linear perspective, ideal human anatomy, triangular composition, luminous oil or fresco surface, classical architecture, no theatrical baroque contrast'
+            },
+            {
+                id: 'jewish-ritual-art',
+                name: '犹太礼仪图像与会堂器物 Jewish Ritual Visual Culture',
+                region: 'europe',
+                era: 'medieval',
+                years: '14 - 15 世纪（近代延续）',
+                start: 1300,
+                types: ['版画书籍', '建筑空间', '金工青铜'],
+                faiths: ['犹太教'],
+                media: 'Haggadah / Torah Ark / 礼仪器物',
+                anchors: '希伯来字母、逾越节书页、托拉柜、灯台符号、文字装饰主导、图像受地域风格影响',
+                materials: '羊皮纸、金彩与墨书、木制 Torah ark、金属礼仪器',
+                distinction: '不要做成基督教祭坛画或满堂圣像；犹太视觉系统更常围绕文字、经卷、会堂陈设和节期礼仪展开。',
+                prompt: 'jewish ritual art, illuminated hebrew haggadah or synagogue torah ark, hebrew script, menorah and Torah scroll motifs, parchment with gold and pigment or carved wooden ark, ceremonial clarity, no christological altarpiece or orthodox icon screen'
+            },
+            {
+                id: 'aztec',
+                name: '阿兹特克帝国艺术 Aztec Imperial Art',
+                region: 'mesoamerica',
+                era: 'earlymodern',
+                years: '14 - 16 世纪',
+                start: 1325,
+                types: ['雕塑造像', '金工青铜', '纺织服饰'],
+                media: '石雕 / 羽饰 / 祭祀器物',
+                anchors: '太阳与战争神系、羽蛇神、羽饰、祭祀石雕、帝国压迫感、历法符号',
+                materials: '火山石、羽毛、金饰、彩绘器物',
+                distinction: '不要做成玛雅古典城市废墟感，也不要做成印加石砌秩序。阿兹特克更帝国、更祭祀、更锋利。',
+                prompt: 'aztec imperial art, volcanic stone ritual sculpture, featherwork regalia, solar and war deity symbolism, dense ceremonial ornament, imperial tension, no classical maya calendar-city calm or inca masonry emphasis'
+            },
+            {
+                id: 'inca',
+                name: '印加石砌与高地秩序 Inca Stone World',
+                region: 'andes',
+                era: 'earlymodern',
+                years: '15 - 16 世纪',
+                start: 1438,
+                types: ['建筑空间', '纺织服饰', '金工青铜'],
+                media: '石砌建筑 / 纺织 / 金工',
+                anchors: '精密石砌、高地台地、太阳祭祀、几何织物、帝国道路系统',
+                materials: '巨石拼接、羊驼织物、金属饰件',
+                distinction: '不要做成中美洲台阶金字塔，印加的核心是山地石砌秩序和高原帝国感。',
+                prompt: 'inca imperial art and architecture, precise polygonal stone masonry, high-altitude terraces, geometric woven garments, solar imperial symbolism, andean mountain clarity, no mesoamerican stepped pyramid iconography'
+            },
+            {
+                id: 'benin',
+                name: '贝宁王国铜牌与宫廷金工 Benin Court Art',
+                region: 'africa',
+                era: 'earlymodern',
+                years: '13 - 19 世纪',
+                start: 1200,
+                types: ['金工青铜', '雕塑造像'],
+                media: '宫廷铜牌 / 头像',
+                anchors: '王权人物正面性、细密纹样、浮雕铜牌、珊瑚珠饰、宫廷等级秩序',
+                materials: '黄铜、青铜铸件、珊瑚装饰',
+                distinction: '不要写成泛非洲木雕面具，贝宁关键在金属宫廷秩序和礼仪性。',
+                prompt: 'benin kingdom court art, cast brass plaque and royal head, coral bead regalia, frontal sovereign authority, intricate surface patterning, palace ceremonial order, no generic african mask simplification'
+            },
+            {
+                id: 'polynesian',
+                name: '波利尼西亚树皮布与航海视觉 Polynesian Tapa World',
+                region: 'pacific_islands',
+                era: 'earlymodern',
+                years: '约 1200 - 1800',
+                start: 1200,
+                types: ['纺织服饰', '木雕身体艺术'],
+                media: '树皮布 / 木雕 / 航海器物',
+                anchors: '几何重复、海浪节律、舟与航海、树皮布纹样、身体装饰逻辑',
+                materials: '树皮布、木材、纤维绳结、天然染色',
+                distinction: '不要做成毛利面部旋纹系统，也不要写成东南亚纺织。波利尼西亚更海洋、更节律化。',
+                prompt: 'polynesian tapa and oceanic carving aesthetic, barkcloth geometric rhythm, seafaring canoe culture, wave-like repeated motifs, natural fiber and wood, ritual body adornment logic, no maori facial spiral dominance'
+            },
+            {
+                id: 'ukiyoe',
+                name: '江户浮世绘 Edo Ukiyo-e',
+                region: 'east_asia',
+                era: 'earlymodern',
+                years: '17 - 19 世纪',
+                start: 1600,
+                types: ['版画书籍', '绘画壁画'],
+                media: '木版画',
+                anchors: '黑色轮廓、大平涂、非中心构图、波雨节奏、都市消费图像',
+                materials: '木版套印、纸张吸墨、普鲁士蓝等套色',
+                distinction: '不要加油画式体积或空气透视，浮世绘靠轮廓和平面节奏成立。',
+                prompt: 'ukiyo-e woodblock print, bold black contour lines, flat color planes, dynamic wave and rain rhythm, cropped edo composition, visible print texture, no western chiaroscuro'
+            },
+            {
+                id: 'catholic-baroque',
+                name: '天主教巴洛克 Catholic Baroque',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '16 世纪后期 - 18 世纪',
+                start: 1563,
+                types: ['绘画壁画', '建筑空间', '雕塑造像'],
+                faiths: ['天主教 / 拉丁基督教'],
+                media: '祭坛画 / 教堂空间 / 雕像',
+                anchors: '戏剧光线、圣徒狂喜、祭坛统摄、云气与金光、弯曲动势、情感说服',
+                materials: '油画、镀金木雕、大理石、灰泥、壁顶幻视',
+                distinction: '不要做成东正教金底平面或新教素净内堂，天主教巴洛克强调感官、戏剧和共同礼拜空间。',
+                prompt: 'catholic baroque church art, dramatic altarpiece and sculptural chapel, intense chiaroscuro, ecstatic saint, gilded ornament, marble and stucco, theatrical sacred light, persuasive devotional spectacle, no orthodox flat gold icon or austere protestant interior'
+            },
+            {
+                id: 'protestant-northern',
+                name: '新教北方视觉 Protestant Northern Europe',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '16 - 17 世纪',
+                start: 1520,
+                types: ['绘画壁画', '版画书籍', '建筑空间'],
+                faiths: ['新教'],
+                media: '版画 / 肖像 / 室内画 / 教堂空间',
+                anchors: '讲坛中心、圣经版画、简净内堂、肖像与静物上升、日常道德题材、改革宗地区少圣像',
+                materials: '木刻铜版、油画、白墙木椅、通俗圣经文本',
+                distinction: '不要做成天主教祭坛戏剧或东正教圣像屏；新教体系里图像更常转向讲道、文字、家庭伦理和世俗题材。',
+                prompt: 'protestant northern european visual culture, plain church interior focused on pulpit and scripture, printed bible and woodcut or engraving, restrained portrait or domestic moral scene, sober light, no baroque saintly ecstasy or gold iconostasis'
+            },
+            {
+                id: 'impressionism',
+                name: '印象派 Impressionism',
+                region: 'europe',
+                era: 'modern',
+                years: '1870s - 1880s',
+                start: 1870,
+                types: ['绘画壁画'],
+                media: '油画',
+                anchors: '破碎笔触、外光写生、空气色、日光反射、边缘松动',
+                materials: '油彩、户外写生、冷暖并置色点',
+                distinction: '不要做成后印象派结构色块或柔焦滤镜，印象派关键是光色瞬间。',
+                prompt: 'impressionist painting, broken brushstrokes, plein-air daylight, shimmering reflections, optical color mixing, fleeting light, soft atmospheric edges, no hard contour or structural cubist fragmentation'
+            },
+            {
+                id: 'art-nouveau',
+                name: '新艺术运动 Art Nouveau',
+                region: 'europe',
+                era: 'modern',
+                years: '1890s - 1910s',
+                start: 1890,
+                types: ['现代设计', '版画书籍'],
+                media: '海报 / 装饰设计',
+                anchors: '长发女性、藤蔓曲线、字体一体化、装饰平面、有机边框',
+                materials: '印刷海报、装饰平面、低饱和珠宝色',
+                distinction: '不要做成波普商业印刷或普通复古纹样，新艺术运动更流动、更植物性。',
+                prompt: 'art nouveau poster, flowing whip-like curves, elegant woman with long hair, floral arabesque ornament, integrated typography, decorative panel rhythm, no harsh pop-art commercial flatness'
+            },
+            {
+                id: 'bauhaus',
+                name: '包豪斯与现代设计 Bauhaus Modern Design',
+                region: 'europe',
+                era: 'modern',
+                years: '1919 - 1933',
+                start: 1919,
+                types: ['现代设计', '建筑空间'],
+                media: '平面设计 / 建筑 / 产品',
+                anchors: '几何网格、功能主义、无衬线字、原色与黑白灰、工业秩序',
+                materials: '钢、玻璃、印刷、模块化构件',
+                distinction: '不要做成极简家居风或至上主义抽象画，包豪斯强调设计系统和功能逻辑。',
+                prompt: 'bauhaus modern design, geometric grid composition, sans-serif typography, black white gray with primary color accents, functionalist architecture or poster, industrial clarity, no decorative art nouveau flourish'
+            },
+            {
+                id: 'showa-anime',
+                name: '昭和赛璐珞动画 Showa Anime',
+                region: 'east_asia',
+                era: 'modern',
+                years: '1960s - 1980s',
+                start: 1960,
+                types: ['动漫插画', '版画书籍'],
+                media: '电视动画',
+                anchors: '厚描边、平涂赛璐珞、手绘背景、速度线、电视工业感',
+                materials: '赛璐珞片、模拟摄影、手绘背景板',
+                distinction: '不要做成 2000 年后数码高光动漫，昭和味道来自平面感和工业痕迹。',
+                prompt: 'showa era cel animation, thick contour lines, flat cel-painted colors, hand-painted background, analog film grain, television anime energy, no glossy modern digital anime finish'
+            }
+        ];
+
+        const referenceLinks = {
+            'lascaux': [
+                { label: 'Lascaux Cave', url: 'https://en.wikipedia.org/wiki/Lascaux' }
+            ],
+            'aboriginal-rock': [
+                { label: 'Australian Aboriginal art', url: 'https://en.wikipedia.org/wiki/Australian_Aboriginal_art' }
+            ],
+            'egypt': [
+                { label: 'Nebamun tomb paintings', url: 'https://en.wikipedia.org/wiki/Paintings_in_the_Tomb_of_Nebamun' }
+            ],
+            'mesopotamia': [
+                { label: 'Lamassu', url: 'https://en.wikipedia.org/wiki/Lamassu' }
+            ],
+            'indus': [
+                { label: 'Dancing Girl', url: 'https://en.wikipedia.org/wiki/Dancing_Girl_(sculpture)' }
+            ],
+            'shang-zhou': [
+                { label: 'Houmuwu Ding', url: 'https://en.wikipedia.org/wiki/Houmuwu_Ding' }
+            ],
+            'maya': [
+                { label: 'Bonampak murals', url: 'https://en.wikipedia.org/wiki/Bonampak' }
+            ],
+            'gandhara': [
+                { label: 'Gandhara', url: 'https://en.wikipedia.org/wiki/Gandhara' }
+            ],
+            'gupta-ajanta': [
+                { label: 'Ajanta Caves', url: 'https://en.wikipedia.org/wiki/Ajanta_Caves' }
+            ],
+            'classical-greek': [
+                { label: 'Doryphoros', url: 'https://en.wikipedia.org/wiki/Doryphoros' }
+            ],
+            'andes-textile': [
+                { label: 'Paracas textile', url: 'https://en.wikipedia.org/wiki/Paracas_textile' }
+            ],
+            'byzantine': [
+                { label: 'Deesis mosaic', url: 'https://en.wikipedia.org/wiki/Deesis_mosaic' }
+            ],
+            'gothic': [
+                { label: 'Chartres Cathedral', url: 'https://en.wikipedia.org/wiki/Chartres_Cathedral' }
+            ],
+            'tang': [
+                { label: 'Mogao Caves', url: 'https://en.wikipedia.org/wiki/Mogao_Caves' }
+            ],
+            'song': [
+                { label: 'Along the River During the Qingming Festival', url: 'https://en.wikipedia.org/wiki/Along_the_River_During_the_Qingming_Festival' }
+            ],
+            'heian': [
+                { label: 'The Tale of Genji Emaki', url: 'https://en.wikipedia.org/wiki/The_Tale_of_Genji_Emaki' }
+            ],
+            'angkor': [
+                { label: 'Angkor Wat', url: 'https://en.wikipedia.org/wiki/Angkor_Wat' }
+            ],
+            'goryeo': [
+                { label: 'Goryeo ware', url: 'https://en.wikipedia.org/wiki/Goryeo_ware' }
+            ],
+            'ethiopia': [
+                { label: 'Church of Saint George, Lalibela', url: 'https://en.wikipedia.org/wiki/Church_of_Saint_George,_Lalibela' }
+            ],
+            'east-asian-buddhist-caves': [
+                { label: 'Mogao Caves', url: 'https://whc.unesco.org/en/list/440/' }
+            ],
+            'orthodox-icons': [
+                { label: 'Theotokos of Vladimir', url: 'https://en.wikipedia.org/wiki/Theotokos_of_Vladimir' }
+            ],
+            'maori': [
+                { label: 'Ta moko', url: 'https://en.wikipedia.org/wiki/T%C4%81_moko' }
+            ],
+            'renaissance': [
+                { label: 'School of Athens', url: 'https://en.wikipedia.org/wiki/School_of_Athens' }
+            ],
+            'jewish-ritual-art': [
+                { label: 'Sarajevo Haggadah', url: 'https://en.wikipedia.org/wiki/Sarajevo_Haggadah' }
+            ],
+            'aztec': [
+                { label: 'Aztec Sun Stone', url: 'https://en.wikipedia.org/wiki/Aztec_sun_stone' }
+            ],
+            'inca': [
+                { label: 'Machu Picchu', url: 'https://en.wikipedia.org/wiki/Machu_Picchu' }
+            ],
+            'benin': [
+                { label: 'Benin Bronzes', url: 'https://en.wikipedia.org/wiki/Benin_Bronzes' }
+            ],
+            'polynesian': [
+                { label: 'Tapa cloth', url: 'https://en.wikipedia.org/wiki/Tapa_cloth' }
+            ],
+            'ukiyoe': [
+                { label: 'The Great Wave off Kanagawa', url: 'https://en.wikipedia.org/wiki/The_Great_Wave_off_Kanagawa' }
+            ],
+            'catholic-baroque': [
+                { label: 'Ecstasy of Saint Teresa', url: 'https://en.wikipedia.org/wiki/Ecstasy_of_Saint_Teresa' }
+            ],
+            'protestant-northern': [
+                { label: 'Interior of the Oude Kerk, Delft', url: 'https://en.wikipedia.org/wiki/Interior_of_the_Oude_Kerk,_Delft,_during_a_Sermon' }
+            ],
+            'impressionism': [
+                { label: 'Impression, Sunrise', url: 'https://en.wikipedia.org/wiki/Impression,_Sunrise' }
+            ],
+            'art-nouveau': [
+                { label: 'Job (Mucha)', url: 'https://en.wikipedia.org/wiki/Job_(Mucha)' }
+            ],
+            'bauhaus': [
+                { label: 'Bauhaus Dessau', url: 'https://en.wikipedia.org/wiki/Bauhaus_Dessau' }
+            ],
+            'showa-anime': [
+                { label: 'Space Battleship Yamato', url: 'https://en.wikipedia.org/wiki/Space_Battleship_Yamato' }
+            ]
+        };
+
+        const searchInput = document.getElementById('search');
+        const resetButton = document.getElementById('reset-filters');
+        const resultCount = document.getElementById('result-count');
+        const mapHotspots = document.getElementById('map-hotspots');
+        const regionTitle = document.getElementById('region-title');
+        const regionDescription = document.getElementById('region-description');
+        const regionHighlights = document.getElementById('region-highlights');
+        const timelineBar = document.getElementById('timeline-bar');
+        const typeFilters = document.getElementById('type-filters');
+        const faithFilters = document.getElementById('faith-filters');
+        const statusBox = document.getElementById('status-box');
+        const activeMeta = document.getElementById('active-meta');
+        const entryGrid = document.getElementById('entry-grid');
+
+        let selectedRegion = 'all';
+        let selectedEra = 'all';
+        let selectedType = '全部艺术类型';
+        let selectedFaith = '全部宗教视觉系统';
+
+        function formatCount(count) {
+            return `显示 ${count} 个文明样本`;
+        }
+
+        function getFilteredEntries(regionOverride = selectedRegion) {
+            const term = searchInput.value.trim().toLowerCase();
+            return entries
+                .filter(entry => regionOverride === 'all' || entry.region === regionOverride)
+                .filter(entry => selectedEra === 'all' || entry.era === selectedEra)
+                .filter(entry => selectedType === '全部艺术类型' || entry.types.includes(selectedType))
+                .filter(entry => selectedFaith === '全部宗教视觉系统' || (entry.faiths || []).includes(selectedFaith))
+                .filter(entry => term === '' || JSON.stringify(entry).toLowerCase().includes(term))
+                .sort((a, b) => a.start - b.start);
+        }
+
+        function renderRegionPanel() {
+            const region = regions[selectedRegion] || regions.all;
+            regionTitle.textContent = region.label;
+            regionDescription.textContent = region.description;
+            regionHighlights.innerHTML = '';
+            region.highlights.forEach(text => {
+                const chip = document.createElement('span');
+                chip.className = 'chip';
+                chip.textContent = text;
+                regionHighlights.appendChild(chip);
+            });
+        }
+
+        function renderMap() {
+            mapHotspots.innerHTML = '';
+            Object.entries(regions).forEach(([id, region]) => {
+                if (id === 'all' || typeof region.x === 'undefined') {
+                    return;
+                }
+                const count = getFilteredEntries(id).length;
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `hotspot${selectedRegion === id ? ' is-active' : ''}`;
+                button.style.left = `${region.x}%`;
+                button.style.top = `${region.y}%`;
+                button.innerHTML = `<div class="hotspot-dot"></div><div class="hotspot-label">${region.label} · ${count}</div>`;
+                button.addEventListener('click', () => {
+                    selectedRegion = id;
+                    updateView();
+                });
+                mapHotspots.appendChild(button);
+            });
+        }
+
+        function renderTimeline() {
+            timelineBar.innerHTML = '';
+            eras.forEach(era => {
+                const node = document.createElement('button');
+                node.type = 'button';
+                node.className = `timeline-node${selectedEra === era.id ? ' is-active' : ''}`;
+                node.innerHTML = `<strong>${era.label}</strong><span>${era.years}</span><span>${era.summary}</span>`;
+                node.addEventListener('click', () => {
+                    selectedEra = era.id;
+                    updateView();
+                });
+                timelineBar.appendChild(node);
+            });
+        }
+
+        function renderTypeFilters() {
+            typeFilters.innerHTML = '';
+            types.forEach(type => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `filter-chip${selectedType === type ? ' is-active' : ''}`;
+                button.textContent = type;
+                button.addEventListener('click', () => {
+                    selectedType = type;
+                    updateView();
+                });
+                typeFilters.appendChild(button);
+            });
+        }
+
+        function renderFaithFilters() {
+            faithFilters.innerHTML = '';
+            faiths.forEach(faith => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `filter-chip${selectedFaith === faith ? ' is-active' : ''}`;
+                button.textContent = faith;
+                button.addEventListener('click', () => {
+                    selectedFaith = faith;
+                    updateView();
+                });
+                faithFilters.appendChild(button);
+            });
+        }
+
+        function renderStatus(entriesView) {
+            const eraLabel = eras.find(era => era.id === selectedEra)?.label || '全部时期';
+            statusBox.innerHTML = `<strong>当前筛选</strong><p>${regions[selectedRegion].label} / ${eraLabel} / ${selectedType} / ${selectedFaith}。当前命中 ${entriesView.length} 个文明样本，适合继续配合关键词缩小到更具体的时代、媒介、宗教视觉系统或器物。</p>`;
+            resultCount.textContent = `${formatCount(entriesView.length)} · ${regions[selectedRegion].label} · ${eraLabel} · ${selectedType} · ${selectedFaith}`;
+            activeMeta.innerHTML = '';
+            [regions[selectedRegion].label, eraLabel, selectedType, selectedFaith].forEach(text => {
+                const chip = document.createElement('span');
+                chip.className = 'meta-chip';
+                chip.textContent = text;
+                activeMeta.appendChild(chip);
+            });
+        }
+
+        async function copyText(text, button) {
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(text);
+                } else {
+                    throw new Error('clipboard unavailable');
+                }
+                button.textContent = '已复制';
+            } catch (error) {
+                const fallback = document.createElement('textarea');
+                fallback.value = text;
+                fallback.setAttribute('readonly', 'readonly');
+                fallback.style.position = 'fixed';
+                fallback.style.opacity = '0';
+                document.body.appendChild(fallback);
+                fallback.select();
+                const ok = document.execCommand('copy');
+                document.body.removeChild(fallback);
+                button.textContent = ok ? '已复制' : '复制失败';
+            }
+            setTimeout(() => {
+                button.textContent = '复制 Prompt';
+            }, 1400);
+        }
+
+        function renderEntries(entriesView) {
+            if (!entriesView.length) {
+                entryGrid.innerHTML = '<div class="empty-state">当前筛选下没有匹配卡片。试着放宽区域、时期或艺术类型，或者换一个搜索词。</div>';
+                return;
+            }
+
+            entryGrid.innerHTML = '';
+            entriesView.forEach(entry => {
+                const refs = referenceLinks[entry.id] || [];
+                const faithChipMarkup = (entry.faiths || []).map(faith => `<span class="chip">${faith}</span>`).join('');
+                const article = document.createElement('article');
+                article.className = 'entry';
+                article.innerHTML = `
+                    <div class="entry-head">
+                        <div>
+                            <h3>${entry.name}</h3>
+                        </div>
+                        <div class="entry-meta">${regions[entry.region].label}<br>${entry.years}</div>
+                    </div>
+                    <div class="chips">${entry.types.map(type => `<span class="chip">${type}</span>`).join('')}${faithChipMarkup}<span class="chip">${entry.media}</span></div>
+                    <div class="entry-body">
+                        <div class="entry-section">
+                            <strong>识别锚点</strong>
+                            <p>${entry.anchors}</p>
+                        </div>
+                        <div class="entry-section">
+                            <strong>材料与媒介</strong>
+                            <p>${entry.materials}</p>
+                        </div>
+                        <div class="entry-section">
+                            <strong>不要混淆</strong>
+                            <p>${entry.distinction}</p>
+                        </div>
+                        <div class="entry-section">
+                            <strong>代表作品 / 图像参考</strong>
+                            <div class="reference-links">${refs.length ? refs.map(ref => `<a href="${ref.url}" target="_blank" rel="noopener noreferrer">${ref.label}</a>`).join('') : '<span>暂无链接</span>'}</div>
+                        </div>
+                        <div class="prompt-box">
+                            <strong>Prompt 骨架</strong>
+                            <code>${entry.prompt}</code>
+                        </div>
+                    </div>
+                `;
+                const actions = document.createElement('div');
+                actions.className = 'entry-actions';
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'copy-button';
+                button.textContent = '复制 Prompt';
+                button.addEventListener('click', () => copyText(entry.prompt, button));
+                actions.appendChild(button);
+                article.appendChild(actions);
+                entryGrid.appendChild(article);
+            });
+        }
+
+        function updateView() {
+            const entriesView = getFilteredEntries();
+            renderRegionPanel();
+            renderMap();
+            renderTimeline();
+            renderTypeFilters();
+            renderFaithFilters();
+            renderStatus(entriesView);
+            renderEntries(entriesView);
+        }
+
+        function resetFilters() {
+            selectedRegion = 'all';
+            selectedEra = 'all';
+            selectedType = '全部艺术类型';
+            selectedFaith = '全部宗教视觉系统';
+            searchInput.value = '';
+            updateView();
+        }
+
+        function toggleDark() {
+            document.body.classList.toggle('dark');
+            document.querySelector('.toggle-dark').textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+        }
+
+        searchInput.addEventListener('input', updateView);
+        resetButton.addEventListener('click', resetFilters);
+        document.addEventListener('keydown', event => {
+            if (event.key === '/' && document.activeElement !== searchInput) {
+                event.preventDefault();
+                searchInput.focus();
+            }
+        });
+
+        updateView();
+    </script>
+</body>
+</html>
