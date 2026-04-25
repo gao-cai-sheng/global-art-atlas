@@ -692,7 +692,7 @@
         <div class="shell control-row">
             <input id="search" type="text" placeholder="搜索文明、地区、媒介或识别词，例如：阿兹特克、太平洋岛国、青铜、木雕、印象派、版画" autocomplete="off">
             <button class="top-button secondary" type="button" id="reset-filters">重置筛选</button>
-            <div class="search-hint" id="result-count">显示 35 个文明样本</div>
+            <div class="search-hint" id="result-count">显示 65 个文明 / 节点样本</div>
         </div>
     </div>
 
@@ -748,6 +748,7 @@
                     <div class="chips">
                         <span class="legend-chip">欧洲</span>
                         <span class="legend-chip">北非与西亚</span>
+                        <span class="legend-chip">中亚</span>
                         <span class="legend-chip">南亚</span>
                         <span class="legend-chip">东亚</span>
                         <span class="legend-chip">东南亚</span>
@@ -785,11 +786,42 @@
             </div>
         </section>
 
+        <section class="guide-panel">
+            <h2>中亚内部怎么分</h2>
+            <p>这张对照卡不是为了再造一个“中亚总风格”，而是帮你把内部最容易混掉的几条线拆开：蓝砖帝都、砖城学都、土城要塞、织物盆地、废墟母城、现代主义首都。</p>
+            <div class="guide-grid">
+                <div class="guide-card">
+                    <strong>撒马尔罕</strong>
+                    <p>看超大尺度蓝色穹顶、巨型拱门、几何书法表皮和帝国展示性。它最亮、最正面、最“帖木儿”。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>布哈拉</strong>
+                    <p>看土黄砖城、宣礼塔、圆顶市集和经学院院落。它不是蓝色巨构，而是沉稳砖质的学术宗教都市。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>希瓦</strong>
+                    <p>看厚土色城墙、封闭内城、短粗绿松石塔和沙漠要塞感。它最像“围墙之内的城壳”。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>塔什干</strong>
+                    <p>看混凝土格栅、马赛克、宽广广场和苏维埃中亚混血。它是现代城市卡，不是古城卡。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>费尔干纳</strong>
+                    <p>看 ikat 丝绸、庭院工坊、果园和灌溉盆地。它的主角是织物和手工业，不是纪念建筑天际线。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>巴尔赫</strong>
+                    <p>看土色废墟、夯土城垣和长时段层积记忆。它更像历史母城节点，不像一眼可认的完整城市外观。</p>
+                </div>
+            </div>
+        </section>
+
         <section class="entries-panel" id="entries-panel">
             <div class="entries-head">
                 <div>
-                    <h2>文明卡片</h2>
-                    <p>这些卡片不是完整世界艺术史，而是为了帮助你更快建立全球艺术的时代坐标和生图语言。</p>
+                    <h2>文明与文化节点</h2>
+                    <p>这些卡片不是完整世界艺术史，而是为了帮助你更快建立全球艺术的时代坐标、城市节点识别和生图语言。</p>
                 </div>
                 <div class="chips" id="active-meta"></div>
             </div>
@@ -823,6 +855,22 @@
                     <strong>宗教先看媒介语法</strong>
                     <p>佛教先看造像比例与石窟叙事，正统基督教先看圣像与圣像屏，天主教先看祭坛与戏剧光，新教先看讲坛、版画与简净内堂，犹太教先看希伯来文、经卷与礼仪器物。</p>
                 </div>
+                <div class="guide-card">
+                    <strong>同一文明圈也能继续细分</strong>
+                    <p>不要把“中华文明圈”或“不列颠”当成单一面貌。越南、朝鲜、日本和中国有共享语法，但材料、气候和政治结构不同；不列颠也能继续切成海权时代、蒸汽时代、维多利亚室内与城市文化。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>边缘文化不是低配中心</strong>
+                    <p>像琉球、占城、缅甸、暹罗或苏格兰高地，不能理解成某个大文明的“次级版本”。更好的方法是同时看共享语法、地方材料、港口网络、宗教路线和气候环境。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>欧洲常常要看城市节点</strong>
+                    <p>巴黎重点看大道、铁栏杆和海报；维也纳看白金几何与世纪末心理感；海德堡看红砂岩废墟和大学城雾气；柯尼斯堡看冷灰砖城与波罗的海理性；巴伐利亚看粉彩灰泥教堂和阿尔卑斯天主教。</p>
+                </div>
+                <div class="guide-card">
+                    <strong>中亚不是空白走廊</strong>
+                    <p>近年的考古与古环境研究越来越强调南中亚绿洲地带在早期城市化中的核心位置。这里既不是西亚或东亚之间的过道，也不是“草原附庸”，而是一条有早期城市、草原金工、丝路商旅和蓝色穹顶的独立文化线。</p>
+                </div>
             </div>
         </section>
     </main>
@@ -833,7 +881,7 @@
         const regions = {
             all: {
                 label: '全部区域',
-                description: '显示当前地图里所有已接入文明样本。世界艺术不是一条单线进化史，而是多个区域在不同材料和宗教系统里的并行发展。',
+                description: '显示当前地图里所有已接入文明与文化节点样本。世界艺术不是一条单线进化史，而是多个区域在不同材料和宗教系统里的并行发展。',
                 highlights: ['地图总览', '跨文明比较', '适合先定范围']
             },
             europe: {
@@ -849,6 +897,13 @@
                 y: 33,
                 description: '这里集中了纪念性建筑、王权浮雕、宗教图像和城市文明早期的结构秩序，古埃及和两河流域都属于这一块观看核心。',
                 highlights: ['纪念建筑', '王权浮雕', '宗教图像', '古代城市']
+            },
+            central_asia: {
+                label: '中亚',
+                x: 61,
+                y: 28,
+                description: '中亚不是简单的过境带。绿洲城市、草原金工、粟特商旅和帖木儿蓝色穹顶共同构成了它的视觉主线；近年的考古研究也越来越强调南中亚在早期城市化中的关键位置。',
+                highlights: ['绿洲城市', '草原金工', '粟特商旅', '蓝色穹顶']
             },
             south_asia: {
                 label: '南亚',
@@ -919,7 +974,7 @@
         ];
 
         const types = ['全部艺术类型', '绘画壁画', '建筑空间', '雕塑造像', '陶瓷器物', '金工青铜', '版画书籍', '纺织服饰', '木雕身体艺术', '动漫插画', '现代设计'];
-        const faiths = ['全部宗教视觉系统', '佛教', '东正教 / 正统基督教', '天主教 / 拉丁基督教', '新教', '犹太教'];
+        const faiths = ['全部宗教视觉系统', '佛教', '东正教 / 正统基督教', '天主教 / 拉丁基督教', '伊斯兰教', '新教', '犹太教'];
 
         const entries = [
             {
@@ -1007,6 +1062,20 @@
                 prompt: 'shang zhou ritual bronze vessel, taotie mask, dense leiwen thunder pattern, heavy archaic silhouette, dark bronze patina with green oxidation, ancestral ritual power'
             },
             {
+                id: 'oxus-civilization',
+                name: '阿姆河文明与绿洲城市 Oxus Civilization',
+                region: 'central_asia',
+                era: 'ancient',
+                years: '前 2300 - 前 1700',
+                start: -2300,
+                types: ['建筑空间', '陶瓷器物', '金工青铜'],
+                media: '绿洲城址 / 宫殿 / 器物',
+                anchors: '夯土宫殿、灌溉绿洲、几何印章、石质器皿、火与水控制下的城市秩序、沙漠中的定居核心',
+                materials: '夯土、泥砖、石器皿、青铜小器、印章',
+                distinction: '不要做成两河巨型神庙城，也不要做成草原游牧营地；阿姆河文明的核心是绿洲灌溉下的早期城市性。',
+                prompt: 'oxus civilization, bronze age oasis city in southern central asia, mudbrick palace and irrigated settlement, geometric stamp seals, stone vessels and bronze tools, desert-edge urban order, no mesopotamian ziggurat monumentalism or open nomadic steppe camp'
+            },
+            {
                 id: 'maya',
                 name: '玛雅建筑与浮雕 Maya Monumental Art',
                 region: 'mesoamerica',
@@ -1034,6 +1103,20 @@
                 materials: '片岩或灰石、深刻衣褶',
                 distinction: '不要做成秣菟罗式圆厚佛身，犍陀罗更冷灰、更古典。',
                 prompt: 'gandhara buddha statue, greco-buddhist realism, deep roman-style drapery folds, wavy hair, gray schist stone, calm classical body, no warm rounded mathura softness'
+            },
+            {
+                id: 'saka-steppe',
+                name: '萨迦-斯基泰草原金工 Saka Steppe Gold',
+                region: 'central_asia',
+                era: 'classical',
+                years: '前 8 - 前 3 世纪',
+                start: -800,
+                types: ['金工青铜', '纺织服饰', '木雕身体艺术'],
+                media: '金饰 / 马具 / 墓葬器物',
+                anchors: '翻卷鹿角、掠食动物、马具金片、草原骑射、毡毯与皮革、库尔干墓葬',
+                materials: '黄金薄片、皮革、木器、毛毡、马具金工',
+                distinction: '不要做成希腊自然主义雕塑，也不要做成中原礼器系统；草原金工更轻、更动势化、更围绕骑乘与墓葬。',
+                prompt: 'saka scythian steppe art, gold animal-style plaques for horse gear and costume, curling antlers and predators in motion, felt leather and wood burial objects, mobile nomadic power, no greek marble naturalism or chinese ritual bronze symmetry'
             },
             {
                 id: 'gupta-ajanta',
@@ -1092,6 +1175,20 @@
                 materials: '玻璃镶嵌片、金箔底、石材教堂',
                 distinction: '不要做成文艺复兴透视空间，拜占庭关键是神圣平面和发光金底。',
                 prompt: 'byzantine mosaic interior, gold ground icon-like figures, frontal sacred presence, shimmering tesserae, domed church architecture, spiritual light, no renaissance naturalistic perspective'
+            },
+            {
+                id: 'sogdian-silk-road',
+                name: '粟特丝路壁画与商旅世界 Sogdian Silk Road',
+                region: 'central_asia',
+                era: 'medieval',
+                years: '5 - 8 世纪',
+                start: 500,
+                types: ['绘画壁画', '建筑空间', '版画书籍'],
+                media: '宫殿壁画 / 城市宅邸 / 商旅图像',
+                anchors: '宴饮使节、驼队商旅、鲜艳壁画、撒马尔罕与潘吉肯特、祆教与多宗教并存、丝路都城的世俗叙事',
+                materials: '夯土城墙、矿物壁画颜料、木构宅邸与书写文本',
+                distinction: '不要做成拜占庭金底圣像或唐代纯宫廷重彩；粟特图像更世俗、更商旅、更讲跨地域交往场景。',
+                prompt: 'sogdian silk road mural world, merchant banquets and embassies, caravan camels and richly dressed traders, vibrant mineral wall paintings in panjakent or samarkand, oasis city houses, multi-religious silk road cosmopolitanism, no byzantine gold icon flatness or purely tang court painting grammar'
             },
             {
                 id: 'gothic',
@@ -1165,6 +1262,35 @@
                 prompt: 'angkor khmer temple art, monumental sandstone towers, bas-reliefs along galleries, serene smiling faces, tropical humidity and water reservoirs, sacred stone weathering, no north asian cave carving language'
             },
             {
+                id: 'champa',
+                name: '占城塔庙与雕刻 Champa Sacred Art',
+                region: 'southeast_asia',
+                era: 'medieval',
+                years: '4 - 13 世纪',
+                start: 400,
+                types: ['建筑空间', '雕塑造像'],
+                media: '塔庙 / 砂岩浮雕',
+                anchors: '红砖塔庙、山地圣谷、Shiva 林伽、砂岩浮雕、细长舞姿、海上印度化',
+                materials: '烧砖、砂岩、湿热风化表面',
+                distinction: '不要做成吴哥那种大体量砂岩王都，也不要做成大越木构宫城；占城更竖向、更砖构、更海岸印度洋化。',
+                prompt: 'champa sacred art, my son sanctuary brick tower-temples in humid mountain basin, sandstone reliefs of shivaic imagery, linga cult symbolism, slender dancing figures, weathered red brick and tropical moss, no angkor sandstone city scale or dai viet timber court atmosphere'
+            },
+            {
+                id: 'bagan',
+                name: '蒲甘佛塔与壁画 Bagan Sacred Landscape',
+                region: 'southeast_asia',
+                era: 'medieval',
+                years: '11 - 13 世纪',
+                start: 1044,
+                types: ['建筑空间', '绘画壁画', '雕塑造像'],
+                faiths: ['佛教'],
+                media: '佛塔 / 寺庙 / 壁画',
+                anchors: '伊洛瓦底江畔平原、密集佛塔、干燥赭土、功德建塔、内壁佛传壁画、钟形与尖塔并置',
+                materials: '砖、灰泥、壁画颜料、镀金佛像',
+                distinction: '不要做成吴哥热带石庙或斯里兰卡纯白佛塔；蒲甘关键是干燥平原上的密集砖塔群和功德体系。',
+                prompt: 'bagan buddhist sacred landscape, dense brick stupas and temples across dry plain by the ayeyarwady river, merit-making monument field, mural-lined shrine interiors, ochre dust and gilded buddha accents, no tropical angkor jungle stone or singular white dagoba simplicity'
+            },
+            {
                 id: 'goryeo',
                 name: '高丽青瓷 Goryeo Celadon',
                 region: 'east_asia',
@@ -1177,6 +1303,48 @@
                 materials: '青瓷釉层、细腻胎体、镶嵌装饰',
                 distinction: '不要写成明清五彩或龙泉厚绿，高丽青瓷更轻、更雅、更空气化。',
                 prompt: 'goryeo celadon vessel, jade-green glaze, delicate sanggam inlay, slender silhouette, soft luminous ceramic surface, restrained court elegance, no flashy multicolor decoration'
+            },
+            {
+                id: 'ryukyu',
+                name: '琉球王国城郭与祭祀景观 Ryukyu Kingdom',
+                region: 'east_asia',
+                era: 'medieval',
+                years: '12 - 17 世纪',
+                start: 1187,
+                types: ['建筑空间', '木雕身体艺术'],
+                media: 'Gusuku 城郭 / 圣地 / 漆器',
+                anchors: '曲线石城墙、珊瑚石灰岩、御城高地、御岳圣地、海上中介贸易、朱红与黑漆点缀',
+                materials: '琉球石灰岩、木构、红漆黑漆、海岛植物环境',
+                distinction: '不要做成日本战国城郭，也不要做成中国南方府城；琉球更柔曲、更海岛化、更带祭祀圣地气质。',
+                prompt: 'ryukyu kingdom aesthetic, gusuku castle on elevated island ridge, curving limestone walls, sacred utaki grove, red and black lacquer accents, maritime crossroads between china korea southeast asia and japan, no japanese sengoku keep silhouette or mainland chinese bureaucratic city layout'
+            },
+            {
+                id: 'joseon',
+                name: '朝鲜王朝文雅与白瓷 Joseon Korea',
+                region: 'east_asia',
+                era: 'earlymodern',
+                years: '1392 - 1910',
+                start: 1392,
+                types: ['陶瓷器物', '绘画壁画', '建筑空间'],
+                media: '白瓷 / 文人画 / 宫阙',
+                anchors: '月壶、铁画龙纹、清雅留白、儒家秩序、韩屋屋脊、书卷气比器物更重',
+                materials: '白瓷、纸墨、水墨设色、木构韩屋',
+                distinction: '不要做成明清宫廷华丽重饰，也不要做成日本茶道粗砺陶；朝鲜王朝更强调儒雅、留白和不对称中的节制。',
+                prompt: 'joseon korea aesthetic, moon jar and literati painting sensibility, restrained white porcelain, iron-brown dragon brushwork, hanok roofline, confucian court order, quiet asymmetry and scholarly reserve, no ming-qing opulence or rustic japanese tea ware roughness'
+            },
+            {
+                id: 'dai-viet',
+                name: '大越宫廷与寺庙艺术 Đại Việt Court Art',
+                region: 'southeast_asia',
+                era: 'medieval',
+                years: '11 - 15 世纪',
+                start: 1010,
+                types: ['建筑空间', '陶瓷器物', '绘画壁画'],
+                media: '皇城 / 佛寺 / 青花与釉陶',
+                anchors: '升龙皇城、深檐木构、莲花与龙纹、青花白釉、汉字秩序中带东南亚湿润感',
+                materials: '木构、砖瓦、釉陶、青花瓷、漆饰',
+                distinction: '不要直接做成明代官式中国建筑，也不要做成高棉砂岩寺庙；大越在汉字官制框架里，仍保留红河三角洲和占城接触带来的轻盈与湿热感。',
+                prompt: 'dai viet court and temple art, thang long citadel atmosphere, deep eaves and timber architecture, lotus and dragon motifs, blue-and-white or white-glazed vietnamese ceramics, sinographic court order with humid red river delta softness, no ming imperial rigidity or angkor sandstone monumentality'
             },
             {
                 id: 'ethiopia',
@@ -1251,6 +1419,109 @@
                 materials: '油画、湿壁画、大理石、古典建筑秩序',
                 distinction: '不要做成巴洛克强戏剧光影，文艺复兴更均衡、更明朗。',
                 prompt: 'high renaissance italian art, balanced linear perspective, ideal human anatomy, triangular composition, luminous oil or fresco surface, classical architecture, no theatrical baroque contrast'
+            },
+            {
+                id: 'florence',
+                name: '佛罗伦萨文艺复兴 Florence',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '15 - 16 世纪',
+                start: 1400,
+                types: ['建筑空间', '绘画壁画', '雕塑造像'],
+                faiths: ['天主教 / 拉丁基督教'],
+                media: '圆顶 / 宫殿 / 湿壁画',
+                anchors: '赭黄石墙、布鲁内莱斯基圆顶、粗石宫殿、线性透视、阿尔诺河、行会与美第奇秩序',
+                materials: '砂岩、灰泥、湿壁画、大理石、青铜门',
+                distinction: '不要做成威尼斯水城反光或罗马巴洛克；佛罗伦萨更干燥、更几何、更以宫殿和圆顶定义。',
+                prompt: 'florence renaissance, ochre stone palazzi and brunelleschi dome, dry tuscan light, linear perspective and fresco culture, medici civic order, rusticated facades and marble sculpture, no venetian lagoon shimmer or baroque theatricality'
+            },
+            {
+                id: 'venice',
+                name: '威尼斯泻湖与节庆世界 Venice',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '15 - 18 世纪',
+                start: 1450,
+                types: ['建筑空间', '绘画壁画', '纺织服饰'],
+                media: '运河 / 宫殿 / 节庆',
+                anchors: '泻湖水光、拜占庭-哥特混血、尖券窗、彩色大理石、金色马赛克、面具与船',
+                materials: '大理石、彩玻璃、木船、丝绒、油画',
+                distinction: '不要做成佛罗伦萨陆地宫殿或阿姆斯特丹商人运河；威尼斯更湿润、更金色、更戏剧化。',
+                prompt: 'venice lagoon world, shimmering water and gothic-byzantine palazzi, pointed windows and colored marble, gilded mosaics, festival masks and boats, humid reflected light, no dry florentine civic geometry or dutch merchant restraint'
+            },
+            {
+                id: 'timurid-samarkand',
+                name: '帖木儿撒马尔罕 Timurid Samarkand',
+                region: 'central_asia',
+                era: 'earlymodern',
+                years: '14 世纪后期 - 15 世纪',
+                start: 1370,
+                types: ['建筑空间', '绘画壁画', '现代设计'],
+                faiths: ['伊斯兰教'],
+                media: '清真寺 / 陵墓 / 天文台 / 砖瓦贴饰',
+                anchors: '青蓝穹顶、巨型拱门、几何星纹、书法砖贴、Registan 学院、天文台与帝国轴线',
+                materials: '烧砖、釉面砖、马赛克砖贴、石材与彩釉穹顶',
+                distinction: '不要做成奥斯曼内堂或波斯细密画页面；帖木儿撒马尔罕的力量在超大尺度立面、蓝色穹顶和几何书法表皮。',
+                prompt: 'timurid samarkand, monumental iwan and turquoise dome, glazed tile mosaic with geometric stars and calligraphy, registan madrasa facade, observatory and imperial axis, deep cobalt and turquoise architecture, no ottoman interior softness or miniature-painting scale'
+            },
+            {
+                id: 'balkh-bactria',
+                name: '巴尔赫与巴克特里亚记忆 Balkh of Bactria',
+                region: 'central_asia',
+                era: 'earlymodern',
+                years: '古代遗绪 - 16 世纪',
+                start: 1200,
+                types: ['建筑空间', '绘画壁画'],
+                faiths: ['佛教', '伊斯兰教'],
+                media: '夯土城址 / 圣地 / 历史层积',
+                anchors: '土黄平原、夯土城垣、古代与伊斯兰层叠、母城记忆、废墟化圣地、河谷边缘的历史沉积',
+                materials: '夯土、泥砖、石材残构、风沙侵蚀表面',
+                distinction: '不要做成撒马尔罕那种高饱和蓝砖立面，也不要做成希瓦封闭内城；巴尔赫更像一座层积的历史母城，视觉核心是土色、废墟和长时段记忆。',
+                prompt: 'balkh of bactria, mother-city memory in central asia, earthen ramparts and mudbrick ruins on tawny plain, layered buddhist and islamic past, weathered sacred site atmosphere, dry wind and historical sediment, no bright timurid tile facade or tightly enclosed khiva old town'
+            },
+            {
+                id: 'bukhara',
+                name: '布哈拉经学院与宣礼塔 Bukhara',
+                region: 'central_asia',
+                era: 'earlymodern',
+                years: '10 - 19 世纪',
+                start: 1000,
+                types: ['建筑空间', '现代设计', '版画书籍'],
+                faiths: ['伊斯兰教'],
+                media: '经学院 / 宣礼塔 / 穹顶街市',
+                anchors: '土黄砖城、Kalyan 宣礼塔、拱券院落、圆顶市集、低饱和蓝砖点缀、学术与宗教中心感',
+                materials: '烧砖、釉砖、木门、灰泥、市场穹顶',
+                distinction: '不要做成撒马尔罕那种正面巨构蓝色立面，也不要做成希瓦那种高墙封闭内城；布哈拉更沉稳、更学术、更砖质化。',
+                prompt: 'bukhara old city, warm buff brick madrasas and bazaars, kalyan minaret rising above domed market streets, restrained turquoise accents, scholarly islamic urban core, sun-baked masonry and carved wooden doors, no samarkand monumental blue facade spectacle or khiva fortress enclosure'
+            },
+            {
+                id: 'khiva',
+                name: '希瓦内城与土色要塞 Khiva Itchan Kala',
+                region: 'central_asia',
+                era: 'earlymodern',
+                years: '17 - 19 世纪',
+                start: 1600,
+                types: ['建筑空间', '现代设计'],
+                faiths: ['伊斯兰教'],
+                media: '内城 / 城墙 / 短塔与经学院',
+                anchors: '厚土色城墙、封闭内城、短粗绿松石塔、紧凑街巷、沙漠边缘要塞感、密集砖土体量',
+                materials: '夯土墙、泥砖、木柱、釉砖塔体',
+                distinction: '不要做成布哈拉那种开放的学术商都，也不要做成撒马尔罕的帝国展示性广场；希瓦首先是一座围墙之内的沙漠要塞城市。',
+                prompt: 'khiva itchan kala, enclosed desert fortress city with high earthen walls, compact alleys, short turquoise minaret, mudbrick and carved wooden columns, oasis stronghold atmosphere, dense sandy massing, no open bukhara bazaar urbanity or monumental timurid facade display'
+            },
+            {
+                id: 'tudor-britain',
+                name: '都铎时期不列颠 Tudor Britain',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '1485 - 1603',
+                start: 1485,
+                types: ['建筑空间', '绘画壁画', '纺织服饰'],
+                media: '宫廷肖像 / 宫殿 / 挂毯',
+                anchors: '都铎玫瑰、黑白木构、金线与毛皮、平面王权肖像、纹章兽、锤梁大厅',
+                materials: '橡木、砖、挂毯、油画、丝绒与金线织物',
+                distinction: '不要做成伊丽莎白晚期海权绘画或维多利亚哥特复兴；都铎更直接地围绕宫廷权力、纹章和礼仪炫示。',
+                prompt: 'tudor britain, henry viii court portrait and palace world, heraldic beasts, tudor rose, hammerbeam hall, oak panelling and brick palace, tapestries and fur-lined velvet, flat royal authority, no later georgian palladian restraint or victorian gothic revival clutter'
             },
             {
                 id: 'jewish-ritual-art',
@@ -1338,6 +1609,78 @@
                 prompt: 'ukiyo-e woodblock print, bold black contour lines, flat color planes, dynamic wave and rain rhythm, cropped edo composition, visible print texture, no western chiaroscuro'
             },
             {
+                id: 'ayutthaya',
+                name: '暹罗阿瑜陀耶 Ayutthaya Siam',
+                region: 'southeast_asia',
+                era: 'earlymodern',
+                years: '1350 - 1767',
+                start: 1350,
+                types: ['建筑空间', '雕塑造像', '绘画壁画'],
+                faiths: ['佛教'],
+                media: '佛寺群 / Prang / 王都遗址',
+                anchors: '河岛都城、Prang 高塔、巨大寺院群、佛塔与佛像并列、贸易口岸都城、残垣中的暹罗秩序',
+                materials: '砖、灰泥、镀金佛像、壁画残迹',
+                distinction: '不要做成吴哥的山寺纪念性，也不要做成曼谷后期金碧寺院；阿瑜陀耶更像河网都城中的巨大废墟群和泰式国家艺术成形期。',
+                prompt: 'ayutthaya siam, ruined river-island capital with monumental prang towers and giant monasteries, brick and stucco buddhist architecture, seated buddha among royal ruins, cosmopolitan trade city memory, no angkor mountain-temple mass or later bangkok gilded excess'
+            },
+            {
+                id: 'georgian-britain',
+                name: '乔治时期不列颠 Georgian Britain',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '1714 - 1830',
+                start: 1714,
+                types: ['建筑空间', '纺织服饰', '绘画壁画'],
+                media: '联排宅邸 / 别墅 / 印花纺织',
+                anchors: 'Palladian 立面、联排与广场、浅色灰泥、古典壁炉、花卉 chintz、肖像与消费社会',
+                materials: '砖、灰泥、木饰面、印花棉布、油画',
+                distinction: '不要做成都铎木构或维多利亚厚重室内；乔治时期更讲比例、城市秩序、古典克制和优雅消费。',
+                prompt: 'georgian britain, palladian villa or townhouse terrace, refined classical proportion, pale stucco and brick facade, elegant fireplace interior, floral chintz textiles, portrait-and-consumer culture, no tudor timber framing or victorian heavy clutter'
+            },
+            {
+                id: 'scottish-highlands',
+                name: '苏格兰高地织物与族徽世界 Scottish Highlands',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '16 世纪 - 19 世纪',
+                start: 1500,
+                types: ['纺织服饰', '木雕身体艺术'],
+                media: 'Tartan / Kilt / Clan 装束',
+                anchors: '格纹 tartan、披肩 plaid、风笛与氏族徽识、高地气候中的厚羊毛、山地武装与后来的浪漫复兴',
+                materials: '羊毛、植物染、皮革、金属扣饰',
+                distinction: '不要做成维多利亚客厅装饰图案，也不要做成泛凯尔特奇幻；高地视觉首先是织物、氏族识别和山地生活结构。',
+                prompt: 'scottish highlands visual culture, tartan plaid and kilt, thick wool in muted weathered colors, clan identity markers, mountain mist and heather landscape, leather and metal dress fittings, no generic fantasy celtic ornament or victorian parlour prettiness'
+            },
+            {
+                id: 'british-age-of-sail',
+                name: '不列颠海权时代 British Age of Sail',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '16 世纪后期 - 19 世纪初',
+                start: 1588,
+                types: ['绘画壁画', '版画书籍', '建筑空间'],
+                media: '海图 / 海军绘画 / 港口景观',
+                anchors: '战列舰、海军肖像、罗盘海图、乌云海面、皇家纹章、绳索帆具与橡木船体',
+                materials: '油画、铜版海图、羊皮纸地图、木船与帆布',
+                distinction: '不要做成伊比利亚天主教殖民祭坛，也不要做成荷兰静谧商港；不列颠海权视觉更偏海军秩序、风暴和帝国航线。',
+                prompt: 'british age of sail visual culture, naval portraiture and port scene, oak warship with rigging and canvas, stormy gray sea, cartographic compass lines, royal heraldry, imperial maritime discipline, no iberian baroque colonial altar or dutch tranquil merchant canal mood'
+            },
+            {
+                id: 'bavaria-rococo',
+                name: '巴伐利亚洛可可与阿尔卑斯天主教 Bavaria Rococo',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '18 世纪',
+                start: 1745,
+                types: ['建筑空间', '绘画壁画', '雕塑造像'],
+                faiths: ['天主教 / 拉丁基督教'],
+                media: '朝圣教堂 / 修道院 / 灰泥装饰',
+                anchors: '乳白、粉绿粉蓝、金白祭坛、流动灰泥、椭圆空间、阿尔卑斯牧场中的轻盈教堂',
+                materials: '灰泥、镀金木雕、壁顶幻视、石砌教堂与木屋环境',
+                distinction: '不要做成罗马巴洛克的戏剧压迫，也不要做成维也纳分离派几何装饰；巴伐利亚更轻、更甜、更乡野天主教。',
+                prompt: 'bavarian rococo church interior, pastel stucco and gilded altar, oval pilgrimage space, airy ceiling fresco illusion, alpine catholic landscape nearby, white pink blue and pale green palette, no roman baroque heaviness or vienna secession geometry'
+            },
+            {
                 id: 'catholic-baroque',
                 name: '天主教巴洛克 Catholic Baroque',
                 region: 'europe',
@@ -1366,6 +1709,147 @@
                 materials: '木刻铜版、油画、白墙木椅、通俗圣经文本',
                 distinction: '不要做成天主教祭坛戏剧或东正教圣像屏；新教体系里图像更常转向讲道、文字、家庭伦理和世俗题材。',
                 prompt: 'protestant northern european visual culture, plain church interior focused on pulpit and scripture, printed bible and woodcut or engraving, restrained portrait or domestic moral scene, sober light, no baroque saintly ecstasy or gold iconostasis'
+            },
+            {
+                id: 'konigsberg-prussia',
+                name: '柯尼斯堡与东普鲁士 Königsberg Prussia',
+                region: 'europe',
+                era: 'earlymodern',
+                years: '16 - 18 世纪',
+                start: 1550,
+                types: ['建筑空间', '版画书籍', '绘画壁画'],
+                faiths: ['新教'],
+                media: '砖砌城堡 / 大学城 / 港口版图',
+                anchors: '砖砌哥特残留、冷灰天光、波罗的海港口、大学理性、地图与琥珀贸易、东普鲁士边疆秩序',
+                materials: '红砖、石材、印刷纸张、木港埠与琥珀装饰',
+                distinction: '不要做成巴伐利亚天主教甜美装饰，也不要做成巴黎咖啡馆现代性；柯尼斯堡更冷、更边疆、更学院化。',
+                prompt: 'konigsberg east prussia visual culture, baltic brick architecture and university town, cool gray northern light, maps books and amber trade details, frontier protestant order, port and bridge atmosphere, no bavarian rococo sweetness or parisian boulevard glamour'
+            },
+            {
+                id: 'british-steam-age',
+                name: '不列颠蒸汽革命 Britain in the Steam Age',
+                region: 'europe',
+                era: 'modern',
+                years: '1760s - 1910s',
+                start: 1760,
+                types: ['建筑空间', '现代设计', '版画书籍'],
+                media: '工厂 / 车站 / 工程版画',
+                anchors: '砖厂房、铸铁桁架、蒸汽机、铁路拱棚、煤烟、铆钉和齿轮、工程图式',
+                materials: '铸铁、钢、砖、玻璃、机床金属表面',
+                distinction: '不要做成包豪斯的清洁现代主义，也不要做成纯蒸汽朋克奇观；蒸汽时代英国更脏、更重、更工程现实。',
+                prompt: 'british steam age, industrial revolution infrastructure, brick mill and iron truss station, steam engine pistons, soot haze, riveted metal, railway viaduct and engineering engraving aesthetic, no clean bauhaus minimalism or fantasy steampunk excess'
+            },
+            {
+                id: 'heidelberg-romanticism',
+                name: '海德堡与德意志浪漫主义 Heidelberg Romanticism',
+                region: 'europe',
+                era: 'modern',
+                years: '18 世纪末 - 19 世纪',
+                start: 1795,
+                types: ['建筑空间', '绘画壁画', '版画书籍'],
+                media: '城堡废墟 / 大学城 / 风景版画',
+                anchors: '红砂岩城堡废墟、内卡河谷、老桥、大学城书卷气、森林雾气、浪漫主义废墟情绪',
+                materials: '红砂岩、石桥、版画纸张、油画风景',
+                distinction: '不要做成普鲁士港口理性秩序，也不要做成巴伐利亚洛可可教堂；海德堡更像废墟、大学和德国浪漫主义的情绪节点。',
+                prompt: 'heidelberg romanticism, red sandstone castle ruins above neckar river, old bridge and wooded valley, university town atmosphere, german romantic landscape mood, soft mist and scholarly melancholy, no prussian port austerity or rococo church sweetness'
+            },
+            {
+                id: 'paris-modernity',
+                name: '巴黎都市现代性 Parisian Modernity',
+                region: 'europe',
+                era: 'modern',
+                years: '1850s - 1930s',
+                start: 1853,
+                types: ['建筑空间', '绘画壁画', '现代设计', '版画书籍'],
+                media: '大道 / 咖啡馆 / 海报 / 百货',
+                anchors: '奥斯曼大道、铁制阳台、咖啡馆遮篷、海报橱窗、煤气灯与霓虹前夜、都市漫游者视角',
+                materials: '石砌立面、铁件、玻璃橱窗、印刷海报、油画与摄影',
+                distinction: '不要做成伦敦维多利亚室内厚重，也不要做成维也纳分离派的几何心理感；巴黎更街道化、更消费都市、更观演化。',
+                prompt: 'parisian modernity, haussmann boulevards and cafe terraces, wrought-iron balconies, poster kiosks and shop windows, gaslight city atmosphere, flaneur viewpoint, painting photography and print culture mixed together, no victorian heavy interior or vienna secession geometry'
+            },
+            {
+                id: 'nguyen-hue',
+                name: '阮朝顺化宫廷艺术 Nguyễn Huế Court Art',
+                region: 'southeast_asia',
+                era: 'modern',
+                years: '1802 - 1945',
+                start: 1802,
+                types: ['建筑空间', '绘画壁画', '金工青铜'],
+                media: '皇城 / 漆饰木构 / 礼仪器物',
+                anchors: '顺化皇城、中轴礼制、黄瓦红柱、龙纹匾额、山水屏风、风水布局与香江景观',
+                materials: '木构、琉璃瓦、漆金、彩绘梁架、青铜礼器',
+                distinction: '不要做成清宫北京的寒冷厚重，也不要做成日本城郭；阮朝更潮湿、更园林化、更依山水风水布局。',
+                prompt: 'nguyen dynasty hue court art, imperial citadel on perfume river, yellow glazed roofs and red lacquered timber, dragon plaques, painted screens, geomantic axial planning, humid subtropical court atmosphere, no qing beijing palace mass or japanese castle austerity'
+            },
+            {
+                id: 'victorian-britain',
+                name: '维多利亚时期不列颠 Victorian Britain',
+                region: 'europe',
+                era: 'modern',
+                years: '1837 - 1901',
+                start: 1837,
+                types: ['建筑空间', '现代设计', '绘画壁画'],
+                media: '哥特复兴建筑 / 室内设计 / 绘画',
+                anchors: '哥特复兴、花纹壁纸、重帘与木饰、彩色玻璃、道德叙事、前拉斐尔派细节、博物馆式陈列',
+                materials: '铸铁、彩玻璃、印花壁纸、织物、油画、木雕',
+                distinction: '不要等同于蒸汽革命基础设施；维多利亚更强调家庭室内、历史复兴、帝国陈列和道德感。',
+                prompt: 'victorian britain aesthetic, gothic revival interior or civic building, patterned wallpaper, stained glass, carved wood, richly layered textile drapery, preraphaelite detail, museum-like display culture, no bare industrial engine hall or edwardian lightness'
+            },
+            {
+                id: 'vienna-secession',
+                name: '维也纳世纪末与分离派 Vienna Secession',
+                region: 'europe',
+                era: 'modern',
+                years: '1890s - 1910s',
+                start: 1897,
+                types: ['建筑空间', '现代设计', '绘画壁画'],
+                media: 'Ringstrasse / 分离派 / 室内设计',
+                anchors: '白金装饰、几何花叶、圆穹与金叶、咖啡馆、维也纳椅、哈布斯堡末世感、音乐与心理学气氛',
+                materials: '石材、金属、玻璃、印刷海报、家具织物与壁画',
+                distinction: '不要做成巴黎新艺术运动的藤蔓流线，也不要做成巴伐利亚教堂洛可可；维也纳更几何、更精致、更带世纪末心理张力。',
+                prompt: 'vienna secession and fin-de-siecle vienna, white and gold geometry, stylized floral pattern, secession building or cafe interior, klimt-like decorative flatness, ringstrasse urban elegance, habsburg twilight mood, no paris art nouveau whip-lash curves or rococo church sweetness'
+            },
+            {
+                id: 'tashkent-modernism',
+                name: '塔什干地震后现代主义 Tashkent Modernism',
+                region: 'central_asia',
+                era: 'modern',
+                years: '1966 年后 - 1980s',
+                start: 1966,
+                types: ['建筑空间', '现代设计'],
+                media: '苏维埃现代主义 / 地震后城市',
+                anchors: '大尺度广场、混凝土格栅、马赛克壁面、抗震城市规划、苏维埃中亚图案、宽阔林荫道',
+                materials: '混凝土、石材贴面、马赛克、金属遮阳构件',
+                distinction: '不要做成布哈拉或希瓦的土城历史感，也不要做成包豪斯式国际极简；塔什干现代主义有很强的苏维埃城市尺度和中亚装饰混血。',
+                prompt: 'tashkent modernism after the 1966 earthquake, soviet central asian urban planning, broad boulevards and plazas, concrete brise-soleil, mosaic murals and seismic modernist blocks, warm light on pale stone and concrete, no earthen old-city enclosure or pure international style minimalism'
+            },
+            {
+                id: 'fergana-basin',
+                name: '费尔干纳盆地丝绸与果园世界 Fergana Basin',
+                region: 'central_asia',
+                era: 'modern',
+                years: '18 世纪 - 20 世纪',
+                start: 1750,
+                types: ['纺织服饰', '现代设计', '建筑空间'],
+                media: 'Atlas Ikat / 工坊 / 庭院街区',
+                anchors: 'Margilan 丝绸、鲜艳 ikat、桑树与果园、灌溉盆地、低矮庭院工坊、织物比纪念建筑更重要',
+                materials: '丝绸、棉布、天然染料、木构庭院与泥墙',
+                distinction: '不要做成撒马尔罕或布哈拉那种砖城古都，也不要做成苏维埃塔什干现代主义；费尔干纳最强的视觉核心是织物、手工业和灌溉盆地生活。',
+                prompt: 'fergana basin visual culture, margilan silk and atlas ikat workshop world, vivid dyed textiles, mulberry and orchard landscape in irrigated basin, low courtyard craft houses, central asian fabric-first aesthetic, no monumental brick old city skyline or soviet urban modernist blocks'
+            },
+            {
+                id: 'edwardian-britain',
+                name: '爱德华时期不列颠 Edwardian Britain',
+                region: 'europe',
+                era: 'modern',
+                years: '1901 - 1914',
+                start: 1901,
+                types: ['纺织服饰', '建筑空间', '绘画壁画'],
+                media: '时装 / 宅邸 / 海报',
+                anchors: 'S 形轮廓、宽檐帽、浅色室内、花园派对、帝国晚期的轻快优雅、从维多利亚厚重走向更轻的流线',
+                materials: '蕾丝、丝绸、轻质羊毛、浅色木饰与抛光表面',
+                distinction: '不要做成维多利亚式厚重装饰，也不要做成一战后装饰艺术几何感；爱德华时期更轻、更明亮、更社交场景化。',
+                prompt: 'edwardian britain, elegant early 20th-century fashion and townhouse interior, s-curve silhouette, broad hats, lace and silk, pale polished rooms, garden-party lightness, late imperial leisure mood, no heavy victorian density or angular art deco geometry'
             },
             {
                 id: 'impressionism',
@@ -1444,11 +1928,17 @@
             'shang-zhou': [
                 { label: 'Houmuwu Ding', url: 'https://en.wikipedia.org/wiki/Houmuwu_Ding' }
             ],
+            'oxus-civilization': [
+                { label: 'Gonur Depe', url: 'https://en.wikipedia.org/wiki/Gonur_Depe' }
+            ],
             'maya': [
                 { label: 'Bonampak murals', url: 'https://en.wikipedia.org/wiki/Bonampak' }
             ],
             'gandhara': [
                 { label: 'Gandhara', url: 'https://en.wikipedia.org/wiki/Gandhara' }
+            ],
+            'saka-steppe': [
+                { label: 'Scythian art', url: 'https://www.metmuseum.org/toah/hd/scyt/hd_scyt.htm' }
             ],
             'gupta-ajanta': [
                 { label: 'Ajanta Caves', url: 'https://en.wikipedia.org/wiki/Ajanta_Caves' }
@@ -1461,6 +1951,9 @@
             ],
             'byzantine': [
                 { label: 'Deesis mosaic', url: 'https://en.wikipedia.org/wiki/Deesis_mosaic' }
+            ],
+            'sogdian-silk-road': [
+                { label: 'Afrasiab murals', url: 'https://en.wikipedia.org/wiki/Afrasiab_murals' }
             ],
             'gothic': [
                 { label: 'Chartres Cathedral', url: 'https://en.wikipedia.org/wiki/Chartres_Cathedral' }
@@ -1477,8 +1970,23 @@
             'angkor': [
                 { label: 'Angkor Wat', url: 'https://en.wikipedia.org/wiki/Angkor_Wat' }
             ],
+            'champa': [
+                { label: 'My Son Sanctuary', url: 'https://whc.unesco.org/en/list/949/' }
+            ],
+            'bagan': [
+                { label: 'Bagan UNESCO', url: 'https://whc.unesco.org/en/list/1588/' }
+            ],
             'goryeo': [
                 { label: 'Goryeo ware', url: 'https://en.wikipedia.org/wiki/Goryeo_ware' }
+            ],
+            'ryukyu': [
+                { label: 'Gusuku Sites of the Ryukyu Kingdom', url: 'https://whc.unesco.org/en/list/972/' }
+            ],
+            'joseon': [
+                { label: 'Moon Jar, Joseon dynasty', url: 'https://www.metmuseum.org/art/collection/search/45432' }
+            ],
+            'dai-viet': [
+                { label: 'Imperial Citadel of Thang Long', url: 'https://whc.unesco.org/en/list/1328/' }
             ],
             'ethiopia': [
                 { label: 'Church of Saint George, Lalibela', url: 'https://en.wikipedia.org/wiki/Church_of_Saint_George,_Lalibela' }
@@ -1494,6 +2002,27 @@
             ],
             'renaissance': [
                 { label: 'School of Athens', url: 'https://en.wikipedia.org/wiki/School_of_Athens' }
+            ],
+            'florence': [
+                { label: 'Historic Centre of Florence', url: 'https://whc.unesco.org/en/list/174/' }
+            ],
+            'venice': [
+                { label: 'Venice and its Lagoon', url: 'https://whc.unesco.org/en/list/394/' }
+            ],
+            'timurid-samarkand': [
+                { label: 'Samarkand – Crossroads of Cultures', url: 'https://whc.unesco.org/en/list/603/' }
+            ],
+            'balkh-bactria': [
+                { label: 'Ancient City of Balkh', url: 'https://whc.unesco.org/en/tentativelists/6050/' }
+            ],
+            'bukhara': [
+                { label: 'Historic Centre of Bukhara', url: 'https://whc.unesco.org/en/list/602/' }
+            ],
+            'khiva': [
+                { label: 'Itchan Kala', url: 'https://whc.unesco.org/en/list/543/' }
+            ],
+            'tudor-britain': [
+                { label: 'The story of Hampton Court Palace', url: 'https://www.hrp.org.uk/hampton-court-palace/history-and-stories/the-story-of-hampton-court-palace/' }
             ],
             'jewish-ritual-art': [
                 { label: 'Sarajevo Haggadah', url: 'https://en.wikipedia.org/wiki/Sarajevo_Haggadah' }
@@ -1513,11 +2042,56 @@
             'ukiyoe': [
                 { label: 'The Great Wave off Kanagawa', url: 'https://en.wikipedia.org/wiki/The_Great_Wave_off_Kanagawa' }
             ],
+            'ayutthaya': [
+                { label: 'Historic City of Ayutthaya', url: 'https://whc.unesco.org/en/list/576/' }
+            ],
+            'georgian-britain': [
+                { label: 'Meet the Georgians', url: 'https://historicengland.org.uk/whats-new/features/georgians/' }
+            ],
+            'scottish-highlands': [
+                { label: 'Tartan at V&A Dundee', url: 'https://www.vam.ac.uk/dundee/whatson/exhibitions/tartan' }
+            ],
+            'british-age-of-sail': [
+                { label: 'Islands and Empires', url: 'https://www.rmg.co.uk/whats-on/islands-empires-online-exhibition' }
+            ],
+            'bavaria-rococo': [
+                { label: 'Pilgrimage Church of Wies', url: 'https://whc.unesco.org/en/list/271/' }
+            ],
             'catholic-baroque': [
                 { label: 'Ecstasy of Saint Teresa', url: 'https://en.wikipedia.org/wiki/Ecstasy_of_Saint_Teresa' }
             ],
             'protestant-northern': [
                 { label: 'Interior of the Oude Kerk, Delft', url: 'https://en.wikipedia.org/wiki/Interior_of_the_Oude_Kerk,_Delft,_during_a_Sermon' }
+            ],
+            'konigsberg-prussia': [
+                { label: 'Königsberg Cathedral', url: 'https://sobor-kaliningrad.ru/en/' }
+            ],
+            'british-steam-age': [
+                { label: 'Science Museum Energy Hall', url: 'https://www.sciencemuseum.org.uk/see-and-do/energy-hall' }
+            ],
+            'heidelberg-romanticism': [
+                { label: 'Heidelberg Castle', url: 'https://www.schloss-heidelberg.de/en/home/' }
+            ],
+            'paris-modernity': [
+                { label: 'Paris, Banks of the Seine', url: 'https://whc.unesco.org/en/list/600/' }
+            ],
+            'nguyen-hue': [
+                { label: 'Complex of Hue Monuments', url: 'https://whc.unesco.org/en/list/678/' }
+            ],
+            'victorian-britain': [
+                { label: 'V&A Arts and Crafts', url: 'https://www.vam.ac.uk/content/articles/a/arts-and-crafts-britain-1880-1914' }
+            ],
+            'vienna-secession': [
+                { label: 'Historic Centre of Vienna', url: 'https://whc.unesco.org/en/list/1033/' }
+            ],
+            'tashkent-modernism': [
+                { label: 'Tashkent Modernist Architecture of the 20th Century', url: 'https://whc.unesco.org/en/tentativelists/6708/' }
+            ],
+            'fergana-basin': [
+                { label: 'Atlas Bayrami, traditional textile culture', url: 'https://www.unesco.org/en/articles/unesco-opens-new-horizons-creative-cities-uzbekistan' }
+            ],
+            'edwardian-britain': [
+                { label: '100 years of fashionable womenswear', url: 'https://www.vam.ac.uk/articles/100-years-of-fashionable-womenswear' }
             ],
             'impressionism': [
                 { label: 'Impression, Sunrise', url: 'https://en.wikipedia.org/wiki/Impression,_Sunrise' }
@@ -1553,7 +2127,7 @@
         let selectedFaith = '全部宗教视觉系统';
 
         function formatCount(count) {
-            return `显示 ${count} 个文明样本`;
+            return `显示 ${count} 个文明 / 节点样本`;
         }
 
         function getFilteredEntries(regionOverride = selectedRegion) {
@@ -1648,7 +2222,7 @@
 
         function renderStatus(entriesView) {
             const eraLabel = eras.find(era => era.id === selectedEra)?.label || '全部时期';
-            statusBox.innerHTML = `<strong>当前筛选</strong><p>${regions[selectedRegion].label} / ${eraLabel} / ${selectedType} / ${selectedFaith}。当前命中 ${entriesView.length} 个文明样本，适合继续配合关键词缩小到更具体的时代、媒介、宗教视觉系统或器物。</p>`;
+            statusBox.innerHTML = `<strong>当前筛选</strong><p>${regions[selectedRegion].label} / ${eraLabel} / ${selectedType} / ${selectedFaith}。当前命中 ${entriesView.length} 个文明 / 节点样本，适合继续配合关键词缩小到更具体的时代、媒介、宗教视觉系统或器物。</p>`;
             resultCount.textContent = `${formatCount(entriesView.length)} · ${regions[selectedRegion].label} · ${eraLabel} · ${selectedType} · ${selectedFaith}`;
             activeMeta.innerHTML = '';
             [regions[selectedRegion].label, eraLabel, selectedType, selectedFaith].forEach(text => {
