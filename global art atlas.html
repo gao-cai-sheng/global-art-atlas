@@ -585,6 +585,29 @@
             font-size: 0.9rem;
         }
 
+        .prompt-box-head {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .prompt-variants {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+        }
+
+        .prompt-variant {
+            background: linear-gradient(180deg, rgba(255,255,255,0.56), rgba(247, 239, 223, 0.88));
+        }
+
+        body.dark .prompt-variant {
+            background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(42, 32, 24, 0.9));
+        }
+
         .entry-actions {
             margin-top: 12px;
             display: flex;
@@ -599,6 +622,12 @@
             cursor: pointer;
             background: var(--accent);
             color: #fffdf8;
+        }
+
+        .copy-button.secondary {
+            background: transparent;
+            border-color: rgba(154, 96, 48, 0.24);
+            color: var(--accent);
         }
 
         .empty-state {
@@ -684,7 +713,7 @@
         <div class="shell hero">
             <p class="eyebrow">Global Art Atlas</p>
             <h1>Global Art Atlas</h1>
-            <p class="subtitle">这一版是新开的全球艺术图谱，不替代原来的 `art6.0.html`。它用 `世界地图 + 时间轴 + 艺术类型 + 宗教视觉系统` 来组织文明与风格，方便把阿兹特克、玛雅、安第斯、非洲、太平洋岛国、佛教石窟、东正教圣像、天主教巴洛克、新教北方视觉与犹太礼仪图像一起纳入比较。</p>
+            <p class="subtitle">这版把全球艺术放进同一张可检索的坐标系里：先看区域，再看时期，再看艺术类型与宗教视觉系统。目标是更快区分不同文明在建筑、造像、绘画、器物与城市节点上的时代差异，并把这些差异转写成更准确的 AI 生图语言。</p>
         </div>
     </header>
 
@@ -715,7 +744,7 @@
                 </div>
                 <div class="summary-card">
                     <strong>卡片负责生图</strong>
-                    <p>每张卡片都给出识别锚点、材料线索、避坑项和 Prompt 骨架，方便直接转写为生成提示词。</p>
+                    <p>每张卡片都给出识别锚点、材料线索、避坑项、综合 Prompt，以及按建筑 / 图像 / 器物拆开的 Prompt，方便直接转写为生成提示词。</p>
                 </div>
             </div>
         </section>
@@ -789,6 +818,7 @@
         <section class="guide-panel">
             <h2>中亚内部怎么分</h2>
             <p>这张对照卡不是为了再造一个“中亚总风格”，而是帮你把内部最容易混掉的几条线拆开：蓝砖帝都、砖城学都、土城要塞、织物盆地、废墟母城、现代主义首都。</p>
+            <p>当前已经接入的中亚条目有：<a class="source-link" href="#oxus-civilization">阿姆河文明</a>、<a class="source-link" href="#saka-steppe">萨迦-斯基泰</a>、<a class="source-link" href="#sogdian-silk-road">粟特</a>、<a class="source-link" href="#timurid-samarkand">撒马尔罕</a>、<a class="source-link" href="#balkh-bactria">巴尔赫</a>、<a class="source-link" href="#bukhara">布哈拉</a>、<a class="source-link" href="#khiva">希瓦</a>、<a class="source-link" href="#tashkent-modernism">塔什干</a>、<a class="source-link" href="#fergana-basin">费尔干纳</a>。</p>
             <div class="guide-grid">
                 <div class="guide-card">
                     <strong>撒马尔罕</strong>
@@ -902,7 +932,7 @@
                 label: '中亚',
                 x: 61,
                 y: 28,
-                description: '中亚不是简单的过境带。绿洲城市、草原金工、粟特商旅和帖木儿蓝色穹顶共同构成了它的视觉主线；近年的考古研究也越来越强调南中亚在早期城市化中的关键位置。',
+                description: '中亚不是简单的过境带。当前已接入阿姆河文明、萨迦-斯基泰、粟特、帖木儿撒马尔罕、巴尔赫、布哈拉、希瓦、塔什干和费尔干纳。绿洲城市、草原金工、丝路商旅、蓝色穹顶与现代主义首都共同构成了它的视觉主线。',
                 highlights: ['绿洲城市', '草原金工', '粟特商旅', '蓝色穹顶']
             },
             south_asia: {
@@ -1000,10 +1030,10 @@
                 start: -20000,
                 types: ['绘画壁画', '木雕身体艺术'],
                 media: '岩画 / 身体图式',
-                anchors: 'X-ray 样式、祖灵路径、点与线的土地编码、赭白黑',
+                anchors: 'X-ray 样式、祖灵路径、手印与动物内视图、赭白黑',
                 materials: '岩壁、矿物颜料、身体涂绘',
-                distinction: '不要把它做成随机点彩抽象画，关键是土地、动物内视图和梦时叙事系统。',
-                prompt: 'aboriginal australian rock art, x-ray animal forms, ochre white and black pigments, ancestral dreamtime pathways, symbolic land mapping, sacred rock shelter surface, no western abstract modernist framing'
+                distinction: '不要把它做成工作室里的现代点画抽象，关键是岩画语境、动物内视图、手印和与 Country 相连的祖灵叙事。',
+                prompt: 'aboriginal australian rock art, ancestral beings and animal x-ray anatomy, ochre white and black pigments, hand stencils and pathway markings on rock shelter walls, sacred connection to Country, no studio dot-painting abstraction or western modernist framing'
             },
             {
                 id: 'egypt',
@@ -1028,10 +1058,10 @@
                 start: -2500,
                 types: ['雕塑造像', '建筑空间'],
                 media: '宫殿浮雕 / 城门',
-                anchors: '楔形文字、翼兽、卷须胡须、征战狩猎、硬质雕刻',
-                materials: '石灰岩浮雕、釉砖、深蓝土黄对比',
+                anchors: '楔形文字、翼兽、卷须胡须、征战狩猎、宫殿石板浮雕',
+                materials: '石灰岩或雪花石膏浮雕、泥砖宫殿、少量彩绘与釉砖建筑细部',
                 distinction: '不要做成古埃及静态壁画，两河更带军事张力和帝国压迫感。',
-                prompt: 'mesopotamian royal relief, assyrian palace carving, cuneiform inscriptions, lamassu guardian, lion hunt scene, hard chiseled stone, imperial force, deep blue glazed brick accents'
+                prompt: 'mesopotamian royal relief, assyrian palace wall slab, cuneiform inscriptions, lamassu guardian, lion hunt scene, carved gypsum or limestone, mudbrick palace setting with traces of pigment and glazed architectural detail, imperial force, no static egyptian wall canon'
             },
             {
                 id: 'indus',
@@ -1084,7 +1114,7 @@
                 start: 250,
                 types: ['建筑空间', '雕塑造像', '绘画壁画'],
                 media: '金字塔 / 石碑 / 壁画',
-                anchors: '台阶金字塔、历法符号、羽蛇神系图像、浮雕石碑、丛林石城',
+                anchors: '台阶金字塔、历法 glyph、王权神祇图像、浮雕石碑、丛林石城',
                 materials: '石灰岩、灰泥彩绘、热带风化表面',
                 distinction: '不要做成阿兹特克帝国晚期的军事压迫感，玛雅更古典、更天文历法化。',
                 prompt: 'classical maya monumental art, stepped pyramid and carved stelae, hieroglyphic calendar glyphs, tropical limestone city in jungle humidity, ritual relief carving, faded mural traces, no late aztec militarized density'
@@ -1106,7 +1136,7 @@
             },
             {
                 id: 'saka-steppe',
-                name: '萨迦-斯基泰草原金工 Saka Steppe Gold',
+                name: '萨卡-斯基泰草原金工 Saka Steppe Gold',
                 region: 'central_asia',
                 era: 'classical',
                 years: '前 8 - 前 3 世纪',
@@ -1231,7 +1261,7 @@
                 anchors: '留白、淡墨层次、清疏理性、内敛器形、釉色克制',
                 materials: '纸绢、水墨、细腻瓷胎、淡青釉层',
                 distinction: '不要做成唐代重彩或明清繁饰，宋代强在克制和呼吸感。',
-                prompt: 'song dynasty aesthetic, literati landscape with broad misty negative space, restrained ink layers, elegant celadon vessel silhouette, quiet rational refinement, no tang exuberant saturation'
+                prompt: 'song dynasty aesthetic, literati landscape sensibility, mist-filled negative space, restrained ink layers, celadon-gray tonality, elegant silhouette, quiet rational refinement, no tang saturation or ming-qing ornamental density'
             },
             {
                 id: 'heian',
@@ -1340,11 +1370,11 @@
                 years: '11 - 15 世纪',
                 start: 1010,
                 types: ['建筑空间', '陶瓷器物', '绘画壁画'],
-                media: '皇城 / 佛寺 / 青花与釉陶',
-                anchors: '升龙皇城、深檐木构、莲花与龙纹、青花白釉、汉字秩序中带东南亚湿润感',
-                materials: '木构、砖瓦、釉陶、青花瓷、漆饰',
+                media: '皇城 / 佛寺 / 白釉与青花陶瓷',
+                anchors: '升龙皇城、深檐木构、莲花与龙纹、白釉褐彩与早期青花、汉字秩序中的湿润感',
+                materials: '木构、砖瓦、白釉与褐彩瓷、早期青花、漆饰',
                 distinction: '不要直接做成明代官式中国建筑，也不要做成高棉砂岩寺庙；大越在汉字官制框架里，仍保留红河三角洲和占城接触带来的轻盈与湿热感。',
-                prompt: 'dai viet court and temple art, thang long citadel atmosphere, deep eaves and timber architecture, lotus and dragon motifs, blue-and-white or white-glazed vietnamese ceramics, sinographic court order with humid red river delta softness, no ming imperial rigidity or angkor sandstone monumentality'
+                prompt: 'dai viet court and temple art, thang long citadel atmosphere, deep-eaved timber architecture in humid delta air, lotus and dragon motifs, white-glazed brown-painted or early blue-and-white vietnamese ceramics, sinographic court order with red river delta softness, no ming imperial rigidity or angkor sandstone monumentality'
             },
             {
                 id: 'ethiopia',
@@ -1765,7 +1795,7 @@
                 anchors: '奥斯曼大道、铁制阳台、咖啡馆遮篷、海报橱窗、煤气灯与霓虹前夜、都市漫游者视角',
                 materials: '石砌立面、铁件、玻璃橱窗、印刷海报、油画与摄影',
                 distinction: '不要做成伦敦维多利亚室内厚重，也不要做成维也纳分离派的几何心理感；巴黎更街道化、更消费都市、更观演化。',
-                prompt: 'parisian modernity, haussmann boulevards and cafe terraces, wrought-iron balconies, poster kiosks and shop windows, gaslight city atmosphere, flaneur viewpoint, painting photography and print culture mixed together, no victorian heavy interior or vienna secession geometry'
+                prompt: 'parisian modernity, haussmann boulevards and cafe terraces, wrought-iron balconies, poster kiosks and department-store windows, gaslight haze, flaneur viewpoint, urban spectacle and print culture, no victorian heavy interior or vienna secession geometry'
             },
             {
                 id: 'nguyen-hue',
@@ -1807,7 +1837,7 @@
                 anchors: '白金装饰、几何花叶、圆穹与金叶、咖啡馆、维也纳椅、哈布斯堡末世感、音乐与心理学气氛',
                 materials: '石材、金属、玻璃、印刷海报、家具织物与壁画',
                 distinction: '不要做成巴黎新艺术运动的藤蔓流线，也不要做成巴伐利亚教堂洛可可；维也纳更几何、更精致、更带世纪末心理张力。',
-                prompt: 'vienna secession and fin-de-siecle vienna, white and gold geometry, stylized floral pattern, secession building or cafe interior, klimt-like decorative flatness, ringstrasse urban elegance, habsburg twilight mood, no paris art nouveau whip-lash curves or rococo church sweetness'
+                prompt: 'vienna secession and fin-de-siecle vienna, white and gold geometry, stylized floral pattern, secession building or cafe interior, decorative gold-leaf flatness, ringstrasse urban elegance, habsburg twilight mood, no paris art nouveau whip-lash curves or rococo church sweetness'
             },
             {
                 id: 'tashkent-modernism',
@@ -2126,6 +2156,57 @@
         let selectedType = '全部艺术类型';
         let selectedFaith = '全部宗教视觉系统';
 
+        const promptVariantConfigs = [
+            {
+                key: 'architecture',
+                label: '建筑 / 空间 Prompt',
+                buttonLabel: '复制 建筑 Prompt',
+                matchTypes: ['建筑空间'],
+                addition: 'architecture-focused composition, exterior or interior spatial depth, structural silhouette and site materials clearly visible, environment supports the building rather than dominating it'
+            },
+            {
+                key: 'image',
+                label: '绘画 / 图像 Prompt',
+                buttonLabel: '复制 图像 Prompt',
+                matchTypes: ['绘画壁画', '版画书籍', '动漫插画', '现代设计'],
+                addition: 'image-focused composition, pictorial surface and linework or brushwork clearly readable, palette and visual rhythm lead the frame, no tourist postcard framing'
+            },
+            {
+                key: 'object',
+                label: '器物 / 造像 Prompt',
+                buttonLabel: '复制 器物 Prompt',
+                matchTypes: ['雕塑造像', '陶瓷器物', '金工青铜', '纺织服饰', '木雕身体艺术'],
+                addition: 'artifact-focused composition, silhouette ornament and material texture clearly readable, close or mid-range framing, no oversized cityscape background'
+            }
+        ];
+
+        const promptVariantOverrides = {
+            'aboriginal-rock': {
+                image: 'aboriginal australian rock painting, ancestral beings and animal x-ray anatomy, ochre white and black pigments, hand stencils and pathway markings on rock shelter wall, sacred connection to Country, no studio dot-painting abstraction',
+                object: 'aboriginal ceremonial body art or painted object, ochre white and black markings, ancestral pathway logic, symbolic relation to land and animal forms, no modern gallery-style abstract patterning'
+            },
+            'mesopotamia': {
+                architecture: 'mesopotamian palace gate or ceremonial court, mudbrick palace walls lined with carved stone slabs, cuneiform inscriptions, lamassu guardian presence, traces of pigment and glazed architectural detail, no static egyptian wall canon',
+                object: 'mesopotamian royal relief panel or lamassu, carved gypsum or limestone, cuneiform bands, muscular guardian force, incised beard and garment detail, no greek freestanding marble naturalism'
+            },
+            'song': {
+                image: 'song dynasty painting, shanshui landscape with mist-filled negative space, restrained ink washes and fine texture strokes, quiet literati mood, no tang mineral-color richness or ming-qing ornamental crowding',
+                object: 'song dynasty ceramic object, celadon or qingbai glaze, elegant restrained silhouette, subtle luminous surface, quiet rational refinement, no tang sancai colorfulness or ming-qing ornate enamel'
+            },
+            'dai-viet': {
+                architecture: 'dai viet court or temple architecture, thang long citadel atmosphere, deep-eaved timber halls and tiled roofs in humid delta air, lotus and dragon motifs, no ming imperial rigidity or angkor sandstone massing',
+                object: 'dai viet ceramic object, white-glazed brown-painted or early blue-and-white vietnamese ware, lotus or dragon motifs, refined surface with red river delta softness, no ming court porcelain stiffness or khmer stone monumentality'
+            },
+            'paris-modernity': {
+                architecture: 'parisian modernity, haussmann boulevard with wrought-iron balconies, cafe terrace awnings, poster kiosks and department-store windows, gaslight haze, urban spectacle, no victorian domestic heaviness',
+                image: 'parisian modernity poster or painting world, boulevard crowd, cafe terraces, shop-window glow, flaneur viewpoint, print culture and urban spectacle, no vienna secession geometry'
+            },
+            'vienna-secession': {
+                architecture: 'vienna secession architecture or cafe interior, white facades, gold ornament, geometric floral pattern, ringstrasse elegance, fin-de-siecle tension, no paris art nouveau whip-lash curves',
+                image: 'vienna secession graphic or decorative panel, white and gold geometry, stylized floral pattern, decorative gold-leaf flatness, fin-de-siecle vienna mood, no rococo sweetness or loose art nouveau arabesque'
+            }
+        };
+
         function formatCount(count) {
             return `显示 ${count} 个文明 / 节点样本`;
         }
@@ -2234,6 +2315,7 @@
         }
 
         async function copyText(text, button) {
+            const defaultLabel = button.dataset.defaultLabel || '复制 Prompt';
             try {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     await navigator.clipboard.writeText(text);
@@ -2254,8 +2336,41 @@
                 button.textContent = ok ? '已复制' : '复制失败';
             }
             setTimeout(() => {
-                button.textContent = '复制 Prompt';
+                button.textContent = defaultLabel;
             }, 1400);
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function injectPromptAddition(basePrompt, addition) {
+            const marker = ', no ';
+            const lower = basePrompt.toLowerCase();
+            const idx = lower.indexOf(marker);
+            if (idx === -1) {
+                return `${basePrompt}, ${addition}`;
+            }
+            return `${basePrompt.slice(0, idx)}, ${addition}${basePrompt.slice(idx)}`;
+        }
+
+        function getPromptVariants(entry) {
+            return promptVariantConfigs
+                .filter(config => config.matchTypes.some(type => entry.types.includes(type)))
+                .map(config => {
+                    const override = promptVariantOverrides[entry.id]?.[config.key];
+                    return {
+                        key: config.key,
+                        label: config.label,
+                        buttonLabel: config.buttonLabel,
+                        text: override || injectPromptAddition(entry.prompt, config.addition)
+                    };
+                });
         }
 
         function renderEntries(entriesView) {
@@ -2268,8 +2383,10 @@
             entriesView.forEach(entry => {
                 const refs = referenceLinks[entry.id] || [];
                 const faithChipMarkup = (entry.faiths || []).map(faith => `<span class="chip">${faith}</span>`).join('');
+                const promptVariants = getPromptVariants(entry);
                 const article = document.createElement('article');
                 article.className = 'entry';
+                article.id = entry.id;
                 article.innerHTML = `
                     <div class="entry-head">
                         <div>
@@ -2296,20 +2413,26 @@
                             <div class="reference-links">${refs.length ? refs.map(ref => `<a href="${ref.url}" target="_blank" rel="noopener noreferrer">${ref.label}</a>`).join('') : '<span>暂无链接</span>'}</div>
                         </div>
                         <div class="prompt-box">
-                            <strong>Prompt 骨架</strong>
-                            <code>${entry.prompt}</code>
+                            <div class="prompt-box-head">
+                                <strong>综合 Prompt</strong>
+                                <button type="button" class="copy-button secondary" data-copy="${escapeHtml(entry.prompt)}" data-default-label="复制 综合 Prompt">复制 综合 Prompt</button>
+                            </div>
+                            <code>${escapeHtml(entry.prompt)}</code>
                         </div>
+                        ${promptVariants.length ? `<div class="prompt-variants">${promptVariants.map(variant => `
+                            <div class="prompt-box prompt-variant">
+                                <div class="prompt-box-head">
+                                    <strong>${variant.label}</strong>
+                                    <button type="button" class="copy-button secondary" data-copy="${escapeHtml(variant.text)}" data-default-label="${variant.buttonLabel}">${variant.buttonLabel}</button>
+                                </div>
+                                <code>${escapeHtml(variant.text)}</code>
+                            </div>
+                        `).join('')}</div>` : ''}
                     </div>
                 `;
-                const actions = document.createElement('div');
-                actions.className = 'entry-actions';
-                const button = document.createElement('button');
-                button.type = 'button';
-                button.className = 'copy-button';
-                button.textContent = '复制 Prompt';
-                button.addEventListener('click', () => copyText(entry.prompt, button));
-                actions.appendChild(button);
-                article.appendChild(actions);
+                article.querySelectorAll('button[data-copy]').forEach(button => {
+                    button.addEventListener('click', () => copyText(button.dataset.copy, button));
+                });
                 entryGrid.appendChild(article);
             });
         }
